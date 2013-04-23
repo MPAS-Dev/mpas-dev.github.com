@@ -1,11 +1,204 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Untitled Document</title>
-	</head>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>MPAS Atmosphere</title>
 
-	<body>
-		Content forthcoming soon ...
-	</body>
-</html>
+  
+  <meta content="W. Skamarock" name="author" />
+</head><body>
+<big><small><br />
+</small><span style="font-weight: bold;" /></big>
+<table style="text-align: left; width: 910px; height: 430px;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">Overview<br />
+      </span></big><big><span style="font-weight: bold;"><br />
+      </span></big><big><small>The atmospheric component of MPAS, as
+with all MPAS
+components, uses an unstructured centroidal Voronoi mesh (grid, or
+tessellation) and
+C-grid staggering of the state variables as the basis for the
+horizontal discretization in the fluid-flow solver.&nbsp; The
+unstructured variable
+resolution meshes can be generated having smoothly-varying mesh
+transitions (see the figure to the right); we believe that this
+capability will ameliorate many issues associated with the traditional
+mesh refinement strategy of one-way and two-way grid nesting where the
+transitions are abrupt.&nbsp; Using the flexibility of the MPAS meshes,
+we are working towards applications in high-resolution numerical
+weather prediction (NWP) and regional climate, in addition to global
+uniform-resolution NWP and climate applications. <br />
+      <br />
+The MPAS atmosphere consists of an atmospheric fluid-flow solver (the <span style="font-style: italic;">dynamical core</span>) and subset of the <a href="http://wrf-model.org/" target="_blank">Advanced Research WRF</a>
+(ARW) model atmospheric physics.&nbsp; Work is underway to port the
+MPAS atmospheric dynamical core to the Community Atmosphere Model (CAM)
+in the <a href="http://www.cesm.ucar.edu/" target="_blank">Community
+Earth Systems Model</a>
+(CESM), which will provide coupling between MPAS Ocean and MPAS
+Atmosphere and coupling to the CAM physics and other components of the
+CESM system.&nbsp; Work is also progressing on porting the National
+Centers for Environmental Prediction (NCEP) Global Forecast System
+(GFS) atmospheric physics to MPAS.</small></big></td>
+      <td style="vertical-align: top; text-align: center;"><img src="MPAS-var-res_mesh.png" style="width: 396px; height: 394px;" alt="" /><br />
+      <span style="font-style: italic;">A variable resolution MPAS
+Voronoi mesh </span><br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+
+<table style="text-align: left; width: 910px; height: 484px;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 496px;"><big><span style="font-weight: bold;">Dynamical Core<br />
+      <br />
+      </span></big><big><small>The MPAS atmospheric dynamical core
+solves the fully compressible nonhydrostatic equations of motion</small></big>.&nbsp;
+The horizontal Voronoi mesh, depicted to the right, uses a C-grid
+staggering of the state variables; the horizontal velocity <span style="font-style: italic;">u</span> is defined as the normal velocity
+on Voronoi cell faces while the other state variables are defined at
+the cell centers.&nbsp; The dual of the Voronoi mesh is the triangular
+mesh shown in dashed lines in the figure.&nbsp; The variable resolution
+meshes a predominantly comprised of hexagons, but pentagons and
+septagons are occasionally present.&nbsp; The primary advances
+associated with the C-grid-staggered Voronoi mesh can be found in <a href="http://www.mmm.ucar.edu/people/skamarock/Papers/cv_43.pdf">Thuburn
+et al JCP (2009) </a>and <a href="http://www.mmm.ucar.edu/people/skamarock/Papers/cv_44.pdf">Ringler
+et al JCP (2010)</a>.<br />
+      <br />
+A description of the compressible nonhydrostatic atmospheric solver can
+be found in <a href="http://www.mmm.ucar.edu/people/skamarock/Papers/cv_49.pdf" target="_blank">Skamarock et al MWR (2012).</a>&nbsp; The fully
+compressible nonhydrostatic equations are cast in terms of a
+geometric-height vertical coordinate, and the solver makes use of a
+split-explicit time integration scheme that is described in <a href="http://www.mmm.ucar.edu/people/skamarock/Papers/cv_36.pdf">Klemp
+et al MWR (2007)</a>.&nbsp; The time-integration scheme employs a
+3rd-order Runge-Kutta method, and large time step, for the
+meteorologically significant modes and a forward-backward method with
+smaller time steps for the acoustic modes (See <a href="http://www.mmm.ucar.edu/people/skamarock/Papers/cv_30.pdf">Wicker
+and Skamarock MWR 2002</a>).&nbsp; The numerical schemes used in the
+atmospheric component of MPAS are very similar to those employed in the
+Advanced Research WRF model.&nbsp; The major differences are that the ARW
+model uses rectangular meshes and a hydrostatic pressure (mass)
+vertical coordinate.&nbsp; Additionally,&nbsp; MPAS uses a
+vector-invariant form of the horizontal momentum equation and a more
+general version of the WRF transport scheme given in <a href="http://www.mmm.ucar.edu/people/skamarock/Papers/cv_47.pdf">Skamarock
+and Gassmann MWR (2011)</a>.</td>
+      <td style="vertical-align: top; width: 394px; text-align: center;"><br />
+<img src="MPAS_C-grid.png" style="width: 357px; height: 360px;" alt="" /><br />
+      <span style="font-style: italic;">C-grid staggered variables on
+the horizontal Voronoi mesh.&nbsp; Normal velocities are defined on the
+cell faces and all other scalar variables are defined at the cell
+centers.&nbsp; Vertical vorticity is defined at the cell vertices.</span><br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+<table style="text-align: left; width: 910px; height: 383px;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <div style="text-align: center;">
+      <div style="text-align: left;"><br />
+      </div>
+      <img src="MPAS_vertical_mesh.png" style="width: 817px; height: 333px;" alt="" /><br />
+      </div>
+      <div style="text-align: center;"><span style="font-style: italic;">MPAS cross section through the Himalayas at 28 degrees N latitude for a 15 km (mean cell-center spacing) uniform mesh.&nbsp; The
+model top is at 30 km.&nbsp; The vertical coordinate in the MPAS-Atmosphere
+solver allows for both the traditional terrain following coordinate (right) and a general hybrid coordinate (left).</span><br />
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<table style="text-align: left; width: 911px; height: 103px;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">The MPAS-Atmosphere solver can
+use a traditional terrain-following height coordinate, where the
+horizontal coordinate surfaces are terrain following at the lowest
+level and relax to a constant height surface at the rigid-lid upper
+boundary.&nbsp; MPAS-A can also use a generalized hybrid coordinate
+that can be configured to relax to a constant height at an intermediate
+height below the lid and, additionally, preferentially filter the small
+wavelength topography features in the terrain-following component at
+higher levels.&nbsp; The formulation is described in&nbsp; <a href="http://dx.doi.org/10.1175/MWR-D-10-05046.1">Klemp MWR (2011).</a> <br />
+&nbsp;<a href="http://dx.doi.org/10.1175/MWR-D-10-05046.1"></a><br />
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<table style="text-align: left; width: 910px; height: 460px;" border="0" cellpadding="2" cellspacing="4">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; width: 506px;"><big style="font-weight: bold;">Atmospheric Physics<br />
+<br />
+      </big>The MPAS-Atmosphere solver uses a physics suite taken from the
+Advanced Research WRF model focusing on the physics configurations
+used in the ARW Nested Regional Climate Model application (WRF-NRCM)
+and the tropical cyclone prediction experiments.&nbsp; The physics are
+described in the <a href="http://www.mmm.ucar.edu/wrf/users/docs/arw_v3.pdf">ARW Technical Note</a>.&nbsp; The available physics packages are:<br />
+
+      <br />
+
+      <span style="font-weight: bold;">Surface Layer: </span>(Monin Obukhov): module_sf_sfclay.F as in WRF 3.5.<br />
+
+      <span style="font-weight: bold;">PBL: </span>YSU as in WRF 3.4.1.<br />
+
+      <span style="font-weight: bold;">Land Surface Model (NOAH 4-layers): </span>as in WRF 3.3.1.<br />
+
+      <span style="font-weight: bold;">Gravity Wave Drag:</span> as in WRF 3.5.<br />
+
+      <span style="font-weight: bold;">Convection:</span> Kain-Fritsch:&nbsp; WRF 3.5; Tiedtke: as in WRFV3.3.1.<br />
+
+      <span style="font-weight: bold;">Microphysics:</span> WSM6: as in WRF 3.5<br />
+
+      <span style="font-weight: bold;">Radiation:</span> RRTMG sw as in WRF 3.4.1;&nbsp; RRTMG lw as in WRF 3.4.1; CAM radiation as in WRF 3.3.1, with some additions from WRF 3.5.<br />
+      <br />
+MPAS-Atmosphere will also be available as a CAM core in CESM.&nbsp; As
+such the MPAS dynamical core will have use of the full CAM physics
+suite as well as model coupling to other CESM components included the
+ocean cores MPAS and POP, the land model CLM, ice models, etc.<br />
+      </td>
+      <td style="vertical-align: top; width: 384px;">
+      <div style="text-align: center;"><img src="reflectivity_2010-10-26-03.png" style="width: 306px; height: 366px;" alt="" /><br />
+      </div>
+      <br />
+      <div style="text-align: center;"><span style="font-style: italic;">Reflectivity from an MPAS 3 km global
+forecast initialized on 2010-10-23 at 0 UTC.&nbsp; The reflectivity is
+diagnosed from the WSM6 hydrometeor fields.&nbsp; Isolated severe convection is evident ahead of the cold front as was observed.<br />
+      </span></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<table style="text-align: left; width: 910px; height: 68px;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">Further Information<br />
+      </span><small><br />
+More information on MPAS can be found on the <a href="http://mpas-dev.github.io/">MPAS home page</a>.
+The atmospheric solver is being developed primarily at the National
+Center for Atmospheric Research (NCAR) in the Mesoscale and Microscale
+Meteorology (MMM) Division in NCAR's Earth Systems Laboratory
+(NESL).&nbsp; For further information on the atmospheric solver contact
+      </small></big><big><small><a href="http://www.mmm.ucar.edu/people/skamarock/">Bill Skamarock at NCAR</a></small></big><big><small>.<br />
+      <br />
+We anticipate releasing MPAS sometime in mid-June 2013.&nbsp; The
+release will include the nonhydrostatic atmospheric solver and
+hydrostatic ocean solver, along with meshes, pre- and post-processing
+utilities, and documentation.<span style="text-decoration: underline;" /></small><span style="font-weight: bold;"><br />
+      </span></big></td>
+    </tr>
+  </tbody>
+</table>
+<br />
+</body></html>
