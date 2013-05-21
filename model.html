@@ -18,7 +18,7 @@
 					height:20px;
 					z-index:2;
 					left: 21px;
-					top: 7px;
+					top: 35px;
 				}
 				#apDiv3 {
 					position:absolute;
@@ -39,38 +39,86 @@
 			</style>
 		</head>
 		<body>
-			<div id="apDiv1">
-				<table width="750" border="1">
-					<caption>
-						There are three methods for downloading the MPAS source code. It is recommended to use the GitHub page in order to access the source code, but any of the methods below will work.
-						<strong> NOTE: If you intend to coallborate on a project, please read the Developer's guide before beginning work.
-						</strong>
-					</caption>
+			<div id="apDiv2">
+				<caption>
+					<strong>PLEASE READ THIS ENTIRE PAGE BEFORE DOWNLOAD ANY OF
+					THE MPAS SOURCE CODE.<br><br></strong>
+
+					 <strong>NOTE: If you intend to collaborate on a project,
+					 please read the Developer's guide before beginning work.
+					 The access method for the MPAS source code you chose will
+					 impact development efforts.</strong>
+				</caption>
+
+				<br>
+				<br>
+
+				The easiest way to acquire the MPAS source code is through the
+				archive file below. Although this is the easiest method, it is also
+				the least flexible.
+				The method used will largely be determined by your use case.
+				You should choose the method that aligns best with your use
+				case.
+
+				<br>
+				<br>
+
+				Archive files are provided both in zip and tar.gz formats. Each
+				tag provides an archive file, and users will have to download
+				the archive file for the most relevant tagged version.
+
+				<br>
+
+				<table width="450" border="1">
 					<tr>
-						<td width="250">&nbsp;</td>
-						<td width="750">&nbsp;</td>
+						<td width="250">Archive file</td>
+						<td width="450"><a href="https://github.com/MPAS-Dev/MPAS-Release/tags" target="_blank">Here</a></td>
+					</tr>
+				</table>
+
+				<br>
+				<hr>
+
+				Our recommended method is to use git. This will allow users to
+				easily update the version they are working, and is the only
+				method that allows contributions back into the MPAS code base.
+				This comes with the caveat of having to know how to use git.
+				There are a few links at the bottom of this page that can help
+				you get started with git.
+
+				<br>
+				<br>
+
+				<table width="450" border="1">
+					<tr>
+						<td width="250">GitHub Page</td>
+						<td width="450"><a href="https://github.com/MPAS-Dev/MPAS-Release" target="_blank">Here</a>
+					</tr>
+				</table>
+
+				<br>
+				<hr>
+
+				<strong>Git related resources:</strong>
+				<br>
+				<table width="450" border="1">
+					<tr>
+						<td width="250">Ry's Git Tutorial</td>
+						<td width="450"><a href="http://rypress.com/tutorials/git/" target="_blank">Here</a>
 					</tr>
 					<tr>
-						<td>GitHub Page (Recommended)</td>
-						<td><a href="https://github.com/MPAS-Dev/MPAS-Release" target="_blank">Here</a>
-						</tr>
-						<tr>
-							<td>git read-only checkout (SSH)</td>
-							<td>git clone git://github.com/MPAS-Dev/MPAS-Release.git</td>
-						</tr>
-						<tr>
-							<td>git read-only checkout (HTTP)</td>
-							<td>git clone https://github.com/MPAS-Dev/MPAS-Release.git</td>
-						</tr>
-						<tr>
-							<td>svn read-only checkout</td>
-							<td>svn checkout https://github.com/MPAS-Dev/MPAS-Release.git</td>
-						</tr>
-						<tr>
-							<td>Zip file</td>
-							<td><a href="https://github.com/MPAS-Dev/MPAS-Release/archive/master.zip">Here</a></td>
-						</tr>
-					</table>
+						<td>Github code school</td>
+						<td><a href="http://try.github.io/levels/1/challenges/1" target="_blank">Here</a>
+					</tr>
+					<tr>
+						<td>Git simple guide</td>
+						<td><a href="http://rogerdudler.github.io/git-guide/" target="_blank">Here</a>
+					</tr>
+					<tr>
+						<td>Git "cheatsheet"</td>
+						<td><a href="http://ndpsoftware.com/git-cheatsheet.html" target="_blank">Here</a>
+					</tr>
+				</table>
 				</div>
 			</body>
 		</html>
