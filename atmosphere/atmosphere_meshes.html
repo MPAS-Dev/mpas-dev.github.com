@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>MPAS-Atmosphere mesh downloads</title>
+
+
+
+
+<style>
+h3.ind
+{
+text-indent:50px;
+}
+
+p.noind
+{
+max-width:650px;
+}
+
+p.ind
+{
+max-width:600px;
+margin-left:50px;
+}
+
+p.ind2
+{
+max-width:575;
+margin-left:75px;
+}
+</style></head><body>
+
+<h1>MPAS-Atmosphere Meshes</h1>
+
+<p class="noind">
+Several resolutions of quasi-uniform meshes, plus one refined mesh, are
+available for download.  Each download provides an SCVT mesh on the unit
+sphere, the mesh connectivity (graph.info) file for the mesh, and
+partitionings of the mesh (e.g., graph.info.part.32) for various MPI
+task counts.  Other meshes may be available upon request from the
+MPAS-Atmosphere developers by sending mail to
+<i>mpas-atmosphere-developers</i> <b>AT</b> <i>googlegroups.com</i>.
+</p>
+
+<h2>Quasi-uniform meshes</h2>
+
+<h3 class="ind">240-km mesh</h3>
+<p class="ind2">
+<a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x1.10242.tar.gz">Download the 240-km mesh</a> (6.6 MB)
+</p>
+
+<h3 class="ind">120-km mesh</h3>
+<p class="ind2">
+<a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x1.40962.tar.gz">Download the 120-km mesh</a> (26.9 MB)
+</p>
+
+<h3 class="ind">60-km mesh</h3>
+<p class="ind2">
+<a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x1.163842.tar.gz">Download the 60-km mesh</a> (111 MB)
+</p>
+
+<h3 class="ind">30-km mesh</h3>
+<p class="ind2">
+<a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x1.655362.tar.gz">Download the 30-km mesh</a> (456 MB)
+</p>
+
+<!--
+<h3 class="ind">15-km mesh</h3>
+<p class="ind2">
+<a href="x1.2621442.tar.gz">Download the 15-km mesh</a> (??? MB)
+</p>
+-->
+
+<h2>Variable-resolution meshes</h2>
+
+<p class="ind">
+All variable-resolution meshes are supplied with a single refinement 
+region that is centered on 0.0 degrees latitude, 0.0 degrees longitude. This region
+of refinement may be relocated to other locations on the sphere using the <i>grid_rotate</i>
+utility, whose usage is described in the MPAS-Atmosphere Users' Guide.
+The <i>grid_rotate</i> utility may be <a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/grid_rotate.tar.gz">downloaded here</a>.
+one would like to relocate this refinement region of there
+</p>
+
+<h3 class="ind">92-km &#8211; 25-km mesh</h3> 
+<p class="ind2"> 
+This mesh contains 163842 horizontal grid cells, with the refinement
+region spanning approximately 30 degrees of latitude/longitude.
+<br>
+<img src="x4.163842.grid.png" height="300" width="300">
+<br> 
+<a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x4.163842.tar.gz">Download the mesh</a> (??? MB) 
+</p>
+
+
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+
+
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>MPAS-Atmosphere Release Notes</title></head><body><br>
+<table style="text-align: left; width: 654px; height: 44px;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <div style="text-align: left;">
+      </div>
+      
+      <div style="text-align: center;"><big><big><big style="font-weight: bold;">Release notes for MPAS-Atmosphere</big></big></big><br>
+      </div>
+
+
+      
+      
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table style="text-align: left; width: 654px; height: 52px; background-color: rgb(255, 255, 204);" border="0" cellpadding="6" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 1.0</span></big><br>
+      <big><span style="font-weight: bold;">14 June 2013</span></big><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+MPAS Version 1.0 was released on 14 June 2013.&nbsp; This is the first
+public release of MPAS, including the atmosphere model.&nbsp; MPAS-A
+has undergone limited testing for NWP time-scale integrations (days to
+weeks) and seasonal to year-long integrations for regional climate
+applications, in addition to idealized testing including dry and moist
+idealized baroclinic waves, squall-lines, supercells, and mountain-wave
+simulations in 2D and 3D Cartesian geometries.<br>
+      <br>
+Considerations regarding this initial release:<br>
+      <ul>
+        <li>We have not tested the model for deep-atmosphere
+configurations; our model top has typically been set at 30 km in real-data simulations.<br>
+        </li>
+        <li>The current physics suite, taken from the WRF-NRCM
+configuration with a few additional options, had not been developed for
+coarse meshes [dx ~ O(100 km)].&nbsp; We have observed a number of
+MPAS-A failures related to physics on coarse meshes for long-term integrations with surface updates.</li>
+        <li>We have only used GFS, CFSR, and NNRP data for
+initialization of full-physics real-world cases. Real case
+initializations using other data, like ERA-Interim data, are currently
+being tested.<br>
+        </li>
+
+        <li>We have only limited post-processing capabilities at present, particularly with respect to visualization.</li>
+        <li>While we have begun testing methods for interpolating the MPAS
+output to latitude-longitude meshes (which would greatly expand our
+post-processing capabilities), these packages are not available in this
+release.&nbsp; <span style="font-style: italic;">We expect to make them available in the near future.</span><br>
+        </li>
+        <li>MPAS must be run under MPI because MPAS uses PIO.&nbsp; We
+understand that there would be some utility to having a serial build,
+and this capability may appear in a later release.<br>
+        </li>
+        <li>MPAS does not currently support running MPAS-Atmosphere
+coupled to MPAS-Ocean.&nbsp; We anticipate that most coupled-model work
+using MPAS-A will occur in CESM.&nbsp; We are, however, open to working
+with others exploring coupling with other modeling systems.<br>
+        </li>
+        <li>MPAS-A
+and MPAS-O are standalone models; this release does not contain the
+CESM configurations for MPAS-A or MPAS-O, both of which are currently
+under development.</li>
+        <li>Data assimilation using the Data Assimilation Research
+Testbed (DART) with MPAS-A is under development.&nbsp; This capability
+is not available in this release.<br>
+        </li>
+      </ul>
+We welcome comments, contributions, bug reports, bug fixes, and any other feedback.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<br><br>
+
+
+
+</body></html>
