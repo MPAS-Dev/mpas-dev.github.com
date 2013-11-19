@@ -7,48 +7,54 @@
 			<!--
 			body p {
 				font-family: Verdana, Geneva, sans-serif;
+				margin: 0px;
+				padding: 0px;
+				padding-left: 20px;
 			}
 			#apDiv1 {
-				position:absolute;
-				width:388px;
-				height:292px;
-				z-index:1;
-				left: 30px;
-				top: 2px;
-			}
-			#apDiv2 {
-				position:absolute;
-				width:341px;
-				height:315px;
-				z-index:2;
-				left: 420px;
-				top: 20px;
+				width:415px;
 			}
 			#apDiv3 {
-				position:absolute;
-				width:742px;
-				height:151px;
-				z-index:3;
-				left: 27px;
-				top: 334px;
+				width:768px;
 			}
 			#apDiv1 p strong {
 				text-align: center;
 				font-family: Verdana, Geneva, sans-serif;
 			}
+			#padimg {
+				padding-left: 20px;
+			}
+                        #padp {
+                                padding-bottom: 10px;
+                        }
+                        td {
+                                border: 0px;
+                                padding: 5px;
+                        }
 			-->
 		</style>
 	</head>
 
 	<body>
+        <table>
+        <tr>
+        <td>
 		<div id="apDiv1">
-			<p><strong>MPAS Overview</strong></p>
+			<p id="padp"><strong>MPAS Overview</strong></p>
 			<p>The Model for Prediction Across Scales (MPAS) is a collaborative project for developing atmosphere, ocean and other earth-system simulation components for use in climate, regional climate and weather studies. The primary development partners are the climate modeling group at Los Alamos National Laboratory (<a href="http://climate.lanl.gov/" title="COSIM" target="_blank">COSIM</a>) and&nbsp; the <a href="http://www.ncar.ucar.edu/" title="NCAR" target="_blank">National Center for Atmospheric Research</a>.&nbsp; Both primary partners are responsible for the MPAS framework, operators and tools common to the applications; LANL has primary responsibility for the ocean and land ice models, and NCAR has primary responsibility for the atmospheric model.</p>
-			<p>&nbsp;</p>
 		</div>
-		<div id="apDiv2"><img src="files/graphics/clouds.png" width="340" height="312" /></div>
+        </td>
+        <td>
+		<div id="padimg"><img src="files/graphics/clouds.png" width="318" height="312" /></div>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2">
 		<div id="apDiv3">
 			<p>The defining features of MPAS are the unstructured <a href="http://public.lanl.gov/ringler/Voronoi.html" title="Voronoi Diagrams" target="_parent">Voronoi meshes</a> and <a href="files/graphics/cgrid.pdf" title="C-Grid" target="_blank">C-grid</a> discretization used as the basis for many of the model components.&nbsp; The unstructured Voronoi meshes, formally Spherical Centriodal Voronoi Tesselations (SCVTs), allow for both quasi-uniform discretization of the sphere and local refinement.&nbsp; The C-grid discretization, where the normal component of velocity on cell edges is prognosed, is especially well-suited for higher-resolution, mesoscale <a href="atmosphere/atmosphere.html" title="MPAS Atmosphere" target="mainFrame">atmosphere</a> and <a href="ocean/ocean.html" title="MPAS Ocean" target="mainFrame">ocean</a> simulations.&#13; The land ice model takes advantage of the SCVT-dual mesh, which is a triangular Delaunay tessellation appropriate for use with Finite-Element-based discretizations.</p>
 		</div>
+        </td>
+        </tr>
+        </table>
 	</body>
 </html>
