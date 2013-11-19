@@ -1,0 +1,73 @@
+<html>
+
+<head>
+<title>Running MPAS-A in single precision</title>
+<style type="text/css">
+     <!--
+     p {
+         font-family: Verdana, Geneva, sans-serif;
+         max-width: 700px;
+     }
+     .console {
+         font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+         white-space: nowrap;
+     } 
+     -->
+</style
+</head>
+
+<body>
+
+<p>
+    Beginning with version 2.0, MPAS-Atmosphere can be compiled and run
+    in single-precision, offering faster model execution and smaller input and
+    output files. <b>Please note, however, that single-precision MPAS-Atmosphere has
+    received only limited testing as of the 2.0 release.</b>
+</p>
+
+<p>
+    To compile a single-precision MPAS-Atmosphere executable, it is necessary to
+    first add <font class="console">-DSINGLE_PRECISION</font> to the definition of
+    <font class="console">MODEL_FORMULATION</font> at the top of the main Makefile.
+    Additionally, any compiler flags, such as <font
+    class="console">-fdefault-real-8</font>, <font class="console">-r8</font>, or
+    <font class="console">-real-size 64</font> must be removed from the compiler
+    target that will be used. For example, if compiling with the gfortran compiler,
+    one would change the line
+</p>
+
+<pre>        "FFLAGS_OPT = -O3 -m64 -ffree-line-length-none -fdefault-real-8 -fdefault-double-8 -fconvert=big-endian -ffree-form" \</pre>
+
+<p>
+    in the top-level Makefile to
+</p>
+
+<pre>        "FFLAGS_OPT = -O3 -m64 -ffree-line-length-none -fconvert=big-endian -ffree-form" \</pre>
+<p>
+    before compiling the <i>init_atmsophere_model</i> and <i>atmosphere_model</i> executables as usual.
+</p>
+
+<p> 
+    Running MPAS-Atmosphere in single-precision requires the user to begin with
+    single-precision SCVT grid files, and all pre-processing steps must be run using a
+    single-precision version of <i>init_atmosphere_model</i> with these grid files.
+    In order to obtain suitable grid files, any existing double-precision SCVT grid
+    file that was downloaded from the 
+    <a href="atmosphere_meshes.html">MPAS-Atmosphere meshes download page</a> may be
+    run through the <a href="http://www.mmm.ucar.edu/projects/mpas/atmosphere_meshes/double_to_float_grid.f90" target="_blank">double_to_float_grid</a>
+    converter program to produce a single-precision grid file.  <b>Using the
+    double-precision grid files with single-precision executables will not work.</b>
+</p>
+
+<p>
+    <i>Any questions related to building and running MPAS-Atmosphere should be directed to the 
+    <a href="https://groups.google.com/forum/?fromgroups#!forum/mpas-atmosphere-help"
+    target="_blank">MPAS-Atmosphere Help</a> forum.  Posting to the forum requires a free google
+    account. Alternatively, questions may be sent from any e-mail address to </i>"mpas-atmosphere-help
+    <b>AT</b> googlegroups.com".  <i>Please note that in either case, questions and their answers will
+    appear on the online forum.</i>
+</p>
+
+</body>
+
+</html>

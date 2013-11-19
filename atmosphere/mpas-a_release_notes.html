@@ -33,13 +33,27 @@
     </tr>
     <tr>
       <td style="vertical-align: top;">
-<i>This section will be updated soon with information about new features in MPAS-Atmosphere version 2.0.</i>
-<br><br>
-The MPAS 2.0 release is the first public release to include the MPAS Land-Ice
-core. For information on MPAS-Land Ice, please see <a
-href="http://mpas-dev.github.io/land_ice/land_ice.html">http://mpas-dev.github.io/land_ice/land_ice.html</a>.
-Information about new features in the MPAS-Ocean core can be found in the
-MPAS-Ocean documentation.<br><br>
+      The 2.0 release represents a relatively minor increment in functionality for MPAS-Atmosphere. 
+      Improvements and new features of MPAS-Atmosphere include:
+      <ul>
+      <li>the option to run the RRTMG long-wave and short-wave radiation codes with climatologically varying 
+          ozone profiles</li>
+      <li>improved interpolation of surface update fields (sea-surface
+          temperatures and fractional seaice)</li>
+      <li>the ability to run MPAS-A in single-precision. This capability has received very limited testing, and the MPAS-A group would be 
+          interested in receiving any feedback based on user experiences with this feature. For information on building and running MPAS-A for
+          single-precision execution, please see <a href="single_precision.html">this page</a>.</li>
+      <li>other minor corrections to code, including:
+              <ul>
+                  <li>logic changes to compute simulated radar reflectivity and other diagnostic fields at the proper time in high-frequency diagnostic files</li>
+                  <li>fix for the lower bound of a loop in the computation of horizontal advection of w when config_w_adv_order=3 (no impact on results); thanks to Bill Gustafson Jr. and Matus Martini of PNNL</li>
+                  <li>turning off the inclusion of moisture by default in the initialization for the Jablonowski and Williamson test case</li>
+              </ul>
+      </ul><br>
+      The MPAS 2.0 release is the first public release to include the MPAS Land-Ice
+      core. For information on MPAS-Land Ice, please see 
+      <a href="http://mpas-dev.github.io/land_ice/land_ice.html">http://mpas-dev.github.io/land_ice/land_ice.html</a>.
+      Information about new features in the MPAS-Ocean core can be found in the MPAS-Ocean documentation.<br><br>
       </td>
     </tr>
 
