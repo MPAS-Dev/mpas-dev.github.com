@@ -29,7 +29,11 @@
     To compile a single-precision MPAS-Atmosphere executable, it is necessary to
     first add <font class="console">-DSINGLE_PRECISION</font> to the definition of
     <font class="console">MODEL_FORMULATION</font> at the top of the main Makefile.
-    Additionally, any compiler flags, such as <font
+    We've found that some versions of the ifort compiler have difficulties with 
+    certain parts of the MPAS-A solver in single precision, and consequently, it may 
+    also be necessary to add <font class="console">-DSINGLE_PRECISION_IFORT</font> to 
+    the specification of <font class="console">MODEL_FORMULATION</font> if using the ifort 
+    compiler. Additionally, any compiler flags, such as <font
     class="console">-fdefault-real-8</font>, <font class="console">-r8</font>, or
     <font class="console">-real-size 64</font> must be removed from the compiler
     target that will be used. For example, if compiling with the gfortran compiler,
