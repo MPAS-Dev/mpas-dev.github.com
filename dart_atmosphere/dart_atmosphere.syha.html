@@ -23,15 +23,10 @@ MPAS Data Assimilation</big></big></big><br />
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">Overview<br />
       </span></big><big><span style="font-weight: bold;"><br />
       </span></big><big><small>
-Data assimilation for MPAS is available as an
-ensemble Kalman filter (EnKF) implemented through Data Assimilation Research Testbed (<a href="http://www.image.ucar.edu/DAReS/DART" target="_blank">DART</a>). 
-      This work is done in a collaborative effort between the <a href="http://www.mmm.ucar.edu">Mesoscale and Microscale Meteorology (MMM)</a> Division and the DART development team in the Institute for Mathematics Applied to Geosciences (IMAGe) in the <a href="http://ncar.ucar.edu" target="_blank">National Center for Atmospheric Research (NCAR)</a>. <br /><br/> 
-
-The latest official release of DART (the "Lanai" version) includes interfaces for both MPAS-Atmosphere and MPAS-Ocean. To download the code, click <a href="http://www2.image.ucar.edu/forms/dart-software-download" target="_blank">here</a> or email dart at ucar dot edu. <br /><br/>
-
-In collaboration with NOAA's <a href="http://www.esrl.noaa.gov">Earth System Research Laboratory</a>, related efforts are also underway to explore ensemble data assimilation for MPAS-Atmosphere with the Gridpoint Statistical Interpolation (GSI) scheme that is operational at <a href="http://www.ncep.noaa.gov">the National Centers for Environmental Prediction</a>.
-
-Further collaborations related to MPAS data assimilation are welcome (see contact information below).
+As an analysis system for MPAS, 
+the ensemble Kalman filter (EnKF) data assimilation technique is implemented through Data Assimilation Research Testbed (<a href="http://www.image.ucar.edu/DAReS/DART" target="_blank">DART</a>). Like other geophysical models, MPAS is fully functioning under the DART framework where various filter types are available such as Ensemble Adjustment Kalman filter (EAKF), Ensemble Kalman filter (EnKF), rank histogram filter, etc. <br />
+The latest official release of DART (the "Lanai" version) includes both MPAS-Atmosphere and MPAS-Ocean model components. To download it, check <a href="http://www2.image.ucar.edu/forms/dart-software-download" target="_blank">here</a> or email dart at ucar dot edu. <br />
+Although we are open to the possibility of building other data assimilation techniques such as variational or hybrid methods for MPAS, we limit our discussion on the implementation and the performance of the EnKF analysis below.
 
 </small></big></td>
       <td style="vertical-align: top; text-align: center;"><img src="spaghetti_Z500mb_anal.2008090512.png" style="width: 356px; height: 354px;" alt="" /><br />
@@ -51,11 +46,11 @@ Further collaborations related to MPAS data assimilation are welcome (see contac
       <td style="vertical-align: top; width: 496px;"><big><span style="font-weight: bold;">The MPAS/DART interface<br />
       <br />
       </span></big><big><small>
-The interface is built on MPAS's unstructured centroidal Voronoi mesh, and does not regrid to latitude-longitude grids.
+The interface is built on the unstructured centroidal Voronoi mesh, and does not regrid to lat/lon grids.
 In MPAS, the finite-volume approach based on a C-grid staggering retains prognostic equations for mass at the center of finite-volume cells and for the normal component of velocity (<i>u</i>) at the faces (or edges in 2D) of the cells. 
-The normal component of velocity (<i>u</i>) at cell edges is then used to reconstruct zonal and meridional winds at cell centers (<img src="V_vector.png" style="width: 20px; height: 22px;" alt="" />) using radial basis functions (RBFs). <br /><br/>
+The normal component of velocity (<i>u</i>) at cell edges is then used to reconstruct zonal and meridional winds at cell centers (<img src="V_vector.png" style="width: 20px; height: 22px;" alt="" />) using radial basis functions (RBFs). <br />
 To avoid the singularity issue on the poles, the cartesian coordinate is employed.<br /><p>
-The forward operators on the unstructured grid mesh are constructed as follows. <br />
+The forward operators in the unstructured grid mesh are constructed as below. <br />
 The dual of the Voronoi mesh, or the triangular mesh
 (shown as dashed lines in the figure to the right), is used to search the closest cell center to an arbitrary 
 (or observation) point, then find three cell centers of the triangle enclosing the desired point.
@@ -70,7 +65,7 @@ For the details on the wind data strategy, refer to the <a href="https://proxy.s
 
 </small></big>&nbsp;
 
-      <td style="vertical-align: center; text-align: center;"><img src="MPAS_grid_components.png" style="width: 396px; height: 354px;" alt="" /><br />
+      <td style="vertical-align: top; text-align: center;"><img src="MPAS_grid_components.png" style="width: 396px; height: 354px;" alt="" /><br />
       <span style="font-style: italic;"> Grid structure used in the MPAS/DART interface
       </span><br />
       </td>
@@ -84,7 +79,8 @@ For the details on the wind data strategy, refer to the <a href="https://proxy.s
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">Contact<br />
       </span></big><big><span style="font-weight: bold;"><br />
       </span></big><big><small>
-For any questions or future collaboration, please contact either So-Young Ha (syha@ucar.edu) or Chris Snyder (chriss@ucar.edu).
+      This work is done in a collaborative effort between the <a href="http://www.mmm.ucar.edu">Mesoscale and Microscale Meteorology (MMM)</a> Division
+ and the DART development team in the Institute for Mathematics Applied to Geosciences (IMAGe) in the <a href="http://ncar.ucar.edu" target="_blank">National Center for Atmospheric Research (NCAR)</a>. For any questions or future collaboration, please contact either So-Young Ha (syha@ucar.edu) or Chris Snyder (chriss@ucar.edu).
 </small></big>&nbsp;
   </tbody>
 </table>
