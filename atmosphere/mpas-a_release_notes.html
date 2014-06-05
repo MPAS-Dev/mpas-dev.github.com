@@ -27,6 +27,29 @@
   <tbody>
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 2.1</span></big><br>
+      <big><span style="font-weight: bold;">6 June 2014</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      This bugfix release corrects two issues in MPAS-Atmosphere:
+      <ul>
+      <li>The double-precision RRTMG long-wave table, RRTMG_LW_DATA.DBL, was inconsistent 
+          with the version of the RRTMG code that was included in MPAS-Atmosphere. 
+          The RRTMG_LW_DATA.DBL has been updated in the MPAS-Data repository, and the source code 
+          includes changes in the data checkout script to download the latest version of all 
+          WRF physics tables from this repository.</li>
+      <li>In two places in the MPAS-Atmosphere solver, the upwinding coefficient for the 3rd-order 
+          advection scheme, config_coef_3rd_order, was incorrectly declared as an integer rather than a real.
+          The bug affects the diagnosis of the covariant vertical velocity omega, resulting in the use
+          of a fourth-order diagnosis as opposed to the third-order diagnosis consistent with the horizontal transport.</li>
+      </ul>
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 2.0</span></big><br>
       <big><span style="font-weight: bold;">15 November 2013</span></big>
       </td>
