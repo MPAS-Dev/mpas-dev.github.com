@@ -27,6 +27,39 @@
   <tbody>
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.0</span></big><br>
+      <big><span style="font-weight: bold;">18 November 2014</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      This major release includes only minor changes to the atmosphere core, and more substantial changes
+      to the shared MPAS infrastructure.<br><br>
+      Changes to atmosphere-specific code include:
+      <ul>
+        <li>Support for soil moisture and soil temperature from ERA-I levels (0-7, 7-28, 28-100, and 100-25 cm);</li>
+        <li>a significant reduction in the print statements written to the log files;</li>
+        <li>a reduction in the set of fields written to the default model history files; and</li>
+        <li>miscellaneous minor bugfixes.</li>
+      </ul>
+      This release of MPAS includes two major changes to the MPAS software infrastructure, the second of which significantly
+      changes the model user interface.
+      <ul>
+        <li>As a significant step in preparing the MPAS framework for support of multiple MPAS cores being compiled together
+            in the same executable, the internal storage of fields and namelist options has been rewritten; this change principally
+            affects model developers who need to access fields inside the MPAS code.
+        <li>To enable full run-time control over file input and output, a new I/O layer has been developed for MPAS. In past
+            releases of MPAS, control over input, restart, and history files took place in the namelist file. <i>Now, all configuration
+            of model input, restart, and history files makes use of separate XML configuration files</i>. A new chapter (Chapter 5) 
+            has been added to the <a href="http://www.mmm.ucar.edu/projects/mpas/mpas_atmosphere_users_guide_3.0.pdf">MPAS-Atmosphere Users' Guide</a> 
+            to describe the use of this new I/O system.
+      </ul>
+      New features in the MPAS-Ocean and MPAS-Land Ice cores may be found in the documentation for these cores.<br><br>
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 2.1</span></big><br>
       <big><span style="font-weight: bold;">6 June 2014</span></big>
       </td>
