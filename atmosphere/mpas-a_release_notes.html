@@ -26,6 +26,23 @@
 <table style="text-align: left; width: 654px; height: 52px; background-color: rgb(255, 255, 204);" border="0" cellpadding="6" cellspacing="2">
   <tbody>
 
+
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.1</span></big><br>
+      <big><span style="font-weight: bold;">24 November 2014</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      This bugfix release corrects an error in the downward extrapolation of RH for model levels 
+      that lie below the surface of the initial condition dataset (e.g., GFS). Without this fix,
+      the RH field used to compute the initial water vapor mixing ratio field may contain zero
+      (or possible garbage) values in the lowest model levels.
+
+      <p>This bug was only present in v3.0, and not in earlier releases of MPAS-Atmosphere.<br>
+      </td>
+    </tr>
+
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.0</span></big><br>
       <big><span style="font-weight: bold;">18 November 2014</span></big>
