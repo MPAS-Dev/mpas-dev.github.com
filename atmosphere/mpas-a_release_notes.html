@@ -28,6 +28,42 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.3</span></big><br>
+      <big><span style="font-weight: bold;">21 January 2015</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      This bugfix release corrects an number of issues in the shared MPAS infrastructure:
+      <ul>
+        <li>Fix an issue in the timekeeping library when comparing time intervals with different numbers of years or months</li>
+        <li>Fix a memory leak when setting times in the time manager</li>
+        <li>Add improved error messages when attempting to read from non-existent files</li>
+        <li>Correctly catch error conditions produced by open() when opening XML files</li>
+        <li>Fix bug in merging var_struct and var_array elements in Registry.xml files</li>
+        <li>Set the s_d variable within time manager to avoid potential division by zero</li>
+        <li>Remove an extra if-test to handle r0a field destruction in pools</li>
+        <li>Avoid allocating memory for inactive package variables</li>
+        <li>Fix for directory creation for streams when directories are nested within non-writable directories</li>
+        <li>Permit input streams to have the same filename template</li>
+        <li>Update infrastructure bootstrapping process to properly handle stream attributes</li>
+        <li>Fix an issue with interval division when resetting alarms</li>
+      </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.2</span></big><br>
+      <big><span style="font-weight: bold;">17 December 2014</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+<i>This bugfix release only affects MPAS-Ocean.</i><br><br>
+      </td>
+    </tr>
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.1</span></big><br>
       <big><span style="font-weight: bold;">24 November 2014</span></big>
       </td>
