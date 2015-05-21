@@ -28,6 +28,42 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 4.0</span></big><br>
+      <big><span style="font-weight: bold;">21 May 2015</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      This major release includes several significant changes to the atmosphere core, and a small number of minor changes
+      to the shared MPAS infrastructure that are visible to users.<br><br>
+      Significant changes in the atmosphere core include the following:
+      <ul>
+        <li>A new split dynamics-transport integration scheme has been introduced, allowing scalar transport to take place on 
+            a longer timestep than the other dynamics. Real-data testing indicates that the new scheme offers greater model
+            stability. This scheme, selected by default, is controlled by the new namelist options 
+            <i>config_split_dynamics_transport</i>, which controls whether the new option is used, and 
+            <i>config_dynamics_split_steps</i>, which sets number of dynamics sub-cycles in a timestep.
+        <li>The concept of physics <i>suites</i> has been introduced, allowing groups of physics parameterizations 
+            that have been tested together to be selected with a single namelist option; this is an alternative to 
+            individually specifying parameterization schemes. By default, MPAS-Atmosphere uses
+            the 'mesoscale_reference' suite, described in Section 6.1 of the Users' Guide.</i>
+        <li>Improved support for initializing with model-level datasets, in particular, ERA-Interim model level data.
+        <li>Scale-adaptive coordinate surface smoothing.
+      </ul>
+      Several minor, though notable, changes have also been included in the MPAS software infrastructure:
+      <ul>
+        <li>A new optional keyword, io_type, has been implemented in the XML stream configuration files, allowing the file format
+            and library to be selected on a per-stream basis. More details are available in Section 5.2 of the Users' Guide.
+        <li>In the MPAS 3.x releases, fields and global attributes showed up in output files in random order; now, the order of
+            the file contents is based on the order that fields and namelist options were declared in the Registry.xml file of a core.
+        <li>A few minor improvements have been made to enable MPAS-Atmosphere to run more reliably in single-precision and at high-resolution,
+            especially on large MPI task counts.
+      </ul>
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.3</span></big><br>
       <big><span style="font-weight: bold;">21 January 2015</span></big>
       </td>
@@ -52,6 +88,7 @@
       </td>
     </tr>
 
+
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.2</span></big><br>
       <big><span style="font-weight: bold;">17 December 2014</span></big>
@@ -62,6 +99,7 @@
 <i>This bugfix release only affects MPAS-Ocean.</i><br><br>
       </td>
     </tr>
+
 
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.1</span></big><br>
@@ -78,6 +116,7 @@
       <p>This bug was only present in v3.0, and not in earlier releases of MPAS-Atmosphere.<br>
       </td>
     </tr>
+
 
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 3.0</span></big><br>
