@@ -70,9 +70,11 @@ directly via "mpas-atmosphere-help <b>AT</b> googlegroups.com".<br>
       <br>
       </i></td>
     </tr>
+
     <tr>
       <td><big><big><small><span style="font-weight: bold;">Standard pressure level plots (850, 500,
 200 hPa).</span><small style="font-weight: bold;">&nbsp; </small><br>
+      <br>
 These fields are part of the standard model history output.<br>
       <br>
 </small></big></big></td>
@@ -91,12 +93,13 @@ These fields are part of the standard model history output.<br>
     <tr>
       <td style="vertical-align: top;"><a target="_blank" href="http://www2.mmm.ucar.edu/projects/mpas/visualization/ncl/mpas-a_plevel_w.ncl">mpas-a_plevel_w.ncl</a></td>
     </tr>
-<tr>
-      <td><br>
-      </td>
+    <tr>
+      <td><br></td>
     </tr>
+
     <tr>
       <td style=""><big><big><small><span style="font-weight: bold;">Other standard plots</span><small style="font-weight: bold;"> </small><br>
+      <br>
 This data is also part of the standard model history output.<br>
       <br>
       </small></big></big></td>
@@ -107,6 +110,34 @@ This data is also part of the standard model history output.<br>
     </tr>
     <tr>
       <td><a target="_blank" href="http://www2.mmm.ucar.edu/projects/mpas/visualization/ncl/mpas-a_olr.ncl">mpas-a_olr.ncl</a></td>
+    </tr>
+    <tr>
+      <td><br></td>
+    </tr>
+
+    <tr>
+      <td style=""><big><big><small><span style="font-weight: bold;">Interpolating MPAS output to a latitude-longitude mesh</span><small style="font-weight: bold;"> </small>
+      <br>
+      <br>
+      The unstructured horizontal mesh used by MPAS can often be problematic for some visualization tools 
+      to work with, and makes it more difficult to quickly check model input or output fields when 
+      trying to track down problems in the model. For these reasons, it can be helpful to interpolate MPAS 
+      fields from their native, unstructured mesh onto a regular, rectangular mesh such as a regular latitude-longitude grid.
+      <br>
+      The "mpas_to_latlon.ncl" script is generally run in two stages:
+      <ol>
+      <li>In the first step, specify the resolution of the latitude-longitude grid to which the script will interpolate, and run 
+          the script to generate the remapping weights (i.e., interpolation weights) that will be used in the second step to actually 
+          interpolate from the MPAS mesh to the latitude-longitude grid.</li>
+      <li>In the second step, after having generated remapping weights for a particular MPAS mesh and a particular resolution of 
+          latitude-longitude grid, set <b>gen_weights = False</b> and run the script to remap any cell-centered field of your choosing 
+          from the MPAS mesh to the latitude-longitude grid.</li>
+      </ol>
+      </small></big></big></td>
+    </tr>
+    <tr>
+      <td><a href="http://www2.mmm.ucar.edu/projects/mpas/visualization/ncl/mpas_to_latlon.ncl" target="_blank">mpas_to_latlon.ncl</a><br>
+      </td>
     </tr>
   </tbody>
 </table>
