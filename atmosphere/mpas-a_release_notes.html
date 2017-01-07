@@ -28,6 +28,65 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 5.0</span></big><br>
+      <big><span style="font-weight: bold;">7 January 2017</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      This major release of MPAS introduces new capabilities, options, and enhancements
+      to MPAS-Atmosphere, as well as many small improvements in the MPAS framework.<br><br>
+
+      Significant changes to MPAS-Atmosphere include:
+      <ul>
+        <li>A new physics suite, 'convection_permitting', that is suitable for applications
+            where convection-permitting meshes (dx < 10 km) are employed, including
+            variable-resolution meshes spanning hydrostatic to nonhydrostatic resolutions
+        <li>Updates to the versions of existing physics schemes
+        <li>A new vertical level distribution (selected by default when running init_atmosphere_model)
+            that has been used in several MPAS-Atmosphere real-time experiments, including
+            the prediction of tropical cyclones
+        <li>The ability to initialize the water vapor mixing ratio directly from specific
+            humidity rather than relative humidity
+        <li>An option to compute sub-grid-scale orography statistics for use by the GWDO scheme
+            directly on the native MPAS mesh from the 30-arc-second topography used for the model
+            terrain field
+        <li>The use of "packages" to save memory by selectively allocating fields based on
+            run-time choices of physics suite or schemes
+        <li>Substantial performance optimizations to the dynamical solver (with contributions from
+            Thomas Henderson (then at NOAA), Robert Sinkovits (SDSC), John Dennis (NCAR), and Ryan Cabell (NCAR))
+        <li>The ability to obtain bit-identical results for any MPI task count (though this may
+            require the addition of compiler flags, e.g., '-fp-model precise' for the ifort compiler)
+        <li>An experimental hybrid-parallel capability to allow execution with MPI and OpenMP; note
+            that this ability does not currently offer a performance advantage and is being released
+            for further development by collaborators
+        <li>Complete documentation for all namelist options and fields in the Registry file;
+            units and description for all fields are also written as variable attributes to
+            all model output files
+        <li>The introduction of a new framework for including diagnostics modules in MPAS-Atmosphere
+        <li>New diagnostics: Ertel PV diagnostics (thanks to Nick Szapiro (OU)), and convective
+            diagnostics including CAPE and CIN
+        <li>The ability to write soundings for a specified list of locations at any specified interval
+            during model integration
+        <li>For data assimilation, an Incremental Analysis Update (IAU) module to reduce
+            initial noise by adding analysis increments over a time window (thanks to Soyoung Ha (NCAR))
+      </ul>
+
+      Updates and improvements to the MPAS framework include:
+      <ul>
+        <li>A simplified method for building single-precision executables: simply add PRECISION=single
+            to the compilation command-line
+        <li>Minor performance improvements, e.g., in halo communication
+        <li>Fixes to allow the infrastructure to correctly handle large meshes (>10^7 cells)
+        <li>OpenMP threading of memory initialization, buffer copying, etc.
+        <li>Minor cleanup and bug fixes throughout
+      </ul>
+
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 4.0</span></big><br>
       <big><span style="font-weight: bold;">22 May 2015</span></big>
       </td>
