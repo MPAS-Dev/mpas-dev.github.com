@@ -34,12 +34,12 @@
     </tr>
     <tr>
       <td style="vertical-align: top;">
-      This minor release of MPAS introduces fixes for several issues in the MPAS v5.0 major release of the atmosphere core, including:<br><br>
+      This minor release of MPAS introduces fixes for several issues in the MPAS v5.0 major release of the atmosphere core, including:<br>
 
       <ul>
-        <li>A fix for patches of high 2-m theta sometimes found in simulations with the MYNN surface layer scheme (part of the 'convection_permitting' suite)
-        <li>Making the upper gravity-wave absorbing layer scale aware, which is necessary to effectively damp vertically propagating waves in the coarse part of variable-resolution meshes
         <li>Re-engineering of the 3-d divergence damping mechanism to improve model stability in some variable-resolution simulations
+        <li>Making the upper gravity-wave absorbing layer scale aware, which is necessary to effectively damp vertically propagating waves in the coarse part of variable-resolution meshes
+        <li>A fix for patches of high 2-m theta sometimes found in simulations with the MYNN surface layer scheme (part of the 'convection_permitting' suite)
         <li>A new initialization option to extrapolate temperature below the first-guess surface with a lapse rate, needed for usable initialization in some cases
         <li>A fix for an issue in which writing 'mslp', but not an isobaric temperature field, to an output stream lead to garbage for MSLP field
         <li>Changes to fix compilation issues on macOS case-insensitive filesystems with GEN_F90=true
@@ -48,6 +48,8 @@
         <li>A fix for compiling on BlueGene systems
         <li>Fixes for various memory issues, mostly related to the expanded use of 'packages' in the v5.0 release
       </ul>
+
+      <i>Note that namelist files used with MPAS v5.0 must be modified before they can be used with MPAS v5.1. Specifically, the 'config_smdiv_p_forward' namelist option has been removed, and the default value for 'config_smdiv' has been changed to 0.1.</i>
 
       </td>
     </tr>
