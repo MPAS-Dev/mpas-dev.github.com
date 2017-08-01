@@ -2,6 +2,12 @@
 <html>
 <head>
 <title>MPAS-Atmosphere Release Notes</title>
+<style>
+.terminal
+{
+    font-family:monospace;
+}
+</style>
 </head>
 
 <body><br>
@@ -25,6 +31,53 @@
 <br>
 <table style="text-align: left; width: 654px; height: 52px; background-color: rgb(255, 255, 204);" border="0" cellpadding="6" cellspacing="2">
   <tbody>
+
+
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 5.2</span></big><br>
+      <big><span style="font-weight: bold;">1 August 2017</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This minor release of MPAS corrects issues when using the PIO 2.x library versions. With the changes
+      in this release, it should be possible to use the latest PIO release from
+      <a href="https://github.com/NCAR/ParallelIO/">https://github.com/NCAR/ParallelIO/</a>.
+      </p>
+
+      <p>
+      When compiling MPAS with a PIO 2.x library version, the <span class="terminal">USE_PIO2=true</span> option should be added to the MPAS build command.
+      </p>
+
+      <p>
+      The PIO 2.x library versions support integrated performance timing with the GPTL library; however,
+      the MPAS infrastructure does not currently provide calls to initialize this library before it is used in PIO.
+      Therefore, it is recommended to add <span class="terminal">-DPIO_ENABLE_TIMING=OFF</span> to the options in the cmake command used to build PIO.
+      </p>
+
+      <p>
+      The following steps may be used as a rough guide to obtaining and installing the latest PIO code:
+  <pre> 
+  git clone git@github.com:NCAR/ParallelIO.git
+  cd ParallelIO
+  export PIOSRC=`pwd`
+  cd ..
+  mkdir build
+  cd build
+  export CC=mpicc
+  export FC=mpif90
+  cmake -DNetCDF_C_PATH=$NETCDF -DNetCDF_Fortran_PATH=$NETCDF -DPnetCDF_PATH=$PNETCDF \
+        -DCMAKE_INSTALL_PREFIX=/somewhere/writable/pio2 -DPIO_ENABLE_TIMING=OFF $PIOSRC
+  make
+  make install
+  </pre>
+      In the above steps, <span class="terminal">/somewhere/writable/pio2</span> should be changed to the installation path for PIO, and after
+      successfully installing, the <span class="terminal">PIO</span> environment variable should be set to this path as well.
+      </p>
+      </td>
+    </tr>
 
 
     <tr>
