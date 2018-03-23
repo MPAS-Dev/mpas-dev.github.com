@@ -34,6 +34,46 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 5.3</span></big><br>
+      <big><span style="font-weight: bold;">22 March 2018</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This minor release of MPAS corrects an issue with the initialization of the water vapor mixing ratio field in MPAS-Atmosphere,
+      and it also adds two other fixes that should not affect model results.
+      </p>
+
+      <p>
+      The MPAS-Atmosphere initialization program (init_atmosphere_model) had previously assumed that any relative humidity field
+      provided in an intermediate file was specified with respect to liquid water at or above 273.15 K, and with respect to ice below
+      this temperature. However, intermediate files produced by the WPS's ungrib.exe program have the RH field adjusted so that
+      is with respect to liquid water everywhere. With this release, the init_atmosphere core correctly interprets the RH field
+      in producing the initial water vapor mixing ratio field. Note that, when initializing from specific humidity (SPECHUMD)
+      rather than RH, there is no change to results.
+      </p>
+
+      <p>
+      Besides the above fix, this release includes two other changes that should have no impact on results:
+      <ul>
+        <li>The "units" and "description" for scalar tendencies have been corrected in the MPAS-Atmosphere Registry.xml file.
+        <li>The sign of the edgeNormalVectors field has been corrected for boundary edges that represent positive normal inflow. Although
+            this change addresses a bug in the code, MPAS-Atmosphere does not have boundary edges, and other MPAS cores either employ
+            no-flux or no-slip conditions along lateral boundaries or arrange such that all boundary edges represent positive outgoing normal velocity.
+      </ul>
+      </p>
+
+      <p>
+      Thanks very much to The Weather Company for identifying the bug in initializing with relative humidity!
+      </p>
+
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 5.2</span></big><br>
       <big><span style="font-weight: bold;">1 August 2017</span></big>
       </td>
