@@ -34,6 +34,69 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 6.0</span></big><br>
+      <big><span style="font-weight: bold;">17 April 2018</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      MPAS v6.0 introduces major changes for the MPAS-Ocean and MPAS-Landice cores, and it contains
+      the first public release of the MPAS-Seaice core. Relative to the MPAS v5.0 release, though,
+      MPAS v6.0 represents a minor increment in capability the MPAS-Atmosphere core.
+      </p>
+
+      <p>
+      Noteworthy changes in MPAS-Atmosphere v6.0 include:
+      </p>
+      <ul>
+        <li>An increase of the default number of layers from 41 to 55 to match
+            the standard experimental set-up used at NCAR.</li>
+        <li>The addition of support for the use of GMTED2010 terrain elevation,
+            matching the default terrain dataset used in the WRF model.
+            <ul>
+                <li>Set <span class="terminal">config_topo_data = 'GMTED2010'</span> in
+                    the <span class="terminal">namelist.init_atmosphere</span> file
+                    when interpolating static fields.</li>
+            </ul>
+            </li>
+        <li>Computation of the GWDO sub-grid-scale orography fields in a way that is more
+            consistent with the pre-computed fields used in the WRF model.</li>
+        <li>Support for parallel builds of the init_atmosphere and atmosphere cores.
+            <ul>
+                <li>Use <span class="terminal">make -j N ...</span></li>
+            </ul>
+            </li>
+        <li>A significant reduction in the size of model initial conditions files.</li>
+      </ul>
+
+
+      </p>
+
+      <p>
+      Changes in the MPAS share infrastructure include:
+      </p>
+      <ul>
+        <li>Introduction of a new module for logging messages during model execution.
+            Unless any errors are encountered, MPAS cores now write a single log file,
+            named <span class="terminal">log.&lt;core&gt;.0000.out</span>. In case errors occur, each MPI task will write
+            its own error log file named <span class="terminal">log.&lt;core&gt;.&lt;task ID&gt;.err</span>.</li>
+        <li>Performance enhancements to aggregated halo exchanges used in the Ocean,
+            Land-ice, and Sea-ice cores.</li>
+        <li>Minor enhancements to the MPAS "stream manager", including the ability to
+            specify "final_only" for the "input_interval" or "output_interval" of a stream
+            to read/write that stream only at the model stop time.</li>
+        <li>Various bug-fixes and other clean-up to ensure that the framework can be used
+            in coupled-model configurations involving more than one MPAS core.</li>
+      </ul>
+      </p>
+
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 5.3</span></big><br>
       <big><span style="font-weight: bold;">22 March 2018</span></big>
       </td>
