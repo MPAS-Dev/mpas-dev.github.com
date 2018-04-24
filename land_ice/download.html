@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 
 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>MPAS-Land Ice Download</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>MPAS-Albany Land Ice Download</title>
   
 
   </head><body>
@@ -17,7 +17,7 @@ MPAS-Land Ice Public Releases</big></big></big><br />
 </table>
 
 
-All versions of the MPAS source code are available: <a href="http://mpas-dev.github.io/registration.html" target="_self">as archive files or as git repositories</a>
+All versions of the MPAS source code are available on Github: <a href="http://mpas-dev.github.io/registration.html" target="_self">as archive files or as git repositories</a>
 <p>
 The above link will take you to the MPAS download pages.  
 If downloading an archive, you will select the version of the code you would like from a list.  
@@ -25,31 +25,39 @@ If cloning a git repository, you will get all releases in your clone.
 Once you have cloned the repository, you can see the releases available with 'git tag' and 
 checkout the release version you want with 'git checkout TAGNAME'. 
 (Note: All cores are part of the MPAS downloads, but the first version that contains the Land Ice core is v2.0.)
+It is not recommended to use versions of the Land Ice core older than v6.0.
 <p>
 
 <table  border="1" cellpadding="3" cellspacing="2">
 	<caption>
-		<b>MPAS-LI Public Releases</b>
+		<b>MPAS-Albany Land Ice Public Releases</b>
 	</caption>
 	<tr>
-		<td><b>Version Number</b></td>  <td><b>Date</b></td> <td><b>Description</b></td> <td><b>User's Guide</b></td>  <td><b>Dome Test Case</b></td>  <td><b>EISMINT Test Case</b></td>
+                <td><b>Version Number</b></td>  <td><b>Date</b></td> <td><b>Description</b></td> <td><b>User's Guide</b></td>  <td><b>Test Cases</b>>
         </tr>
-        <tr>
+
+         <tr>
+		<td>6.0</td> 
+		<td>April 17, 2018</td>  
+                <td>Addition of Albany FO velocity solver, thermal solver, subglacial  hydrology  model,  calving,  analysis  members,  coupling to E3SM.</td>  
+		<td><a href="https://zenodo.org/record/1227426/files/mpas_landice_users_guide.pdf">v6.0 User's Guide</a></td>  
+		<td><a href="https://zenodo.org/record/1227430/files/MALI_v6.0_testcases.tar.gz">v6.0 Test Case Archive</a></td>  
+	</tr>
+
+       <tr>
 		<td>3.0</td> 
 		<td>Nov. 18, 2014</td>  
-		<td>Introduction of run-time streams</td>  
-		<td><a href="http://oceans11.lanl.gov/mpas_data/mpas_landice/users_guide/release_3.0/mpas_landice_users_guide_3.0.pdf">3.0 User's Guide</a></td>  
-		<td><a href="http://oceans11.lanl.gov/mpas_data/mpas_landice/test_cases/release_3.0/dome-3.0.tar.gz">3.0 Dome Test Case</a></td>  
-		<td><a href="http://oceans11.lanl.gov/mpas_data/mpas_landice/test_cases/release_3.0/EISMINT1-3.0.tar.gz">3.0 EISMINT Test Case</a></td>
+                <td>Introduction of run-time streams</td>  
+                <td> n/a </td>
+                <td> n/a </td>
 	</tr>
 
 	<tr>
 		<td>2.0</td> 
 		<td>Nov. 15, 2013</td>  
 		<td>Initial release of LI core</td>  
-		<td><a href="http://oceans11.lanl.gov/mpas_data/mpas_landice/users_guide/release_2.0/mpas_landice_users_guide_2.0.pdf">2.0 User's Guide</a></td>  
-		<td><a href="http://oceans11.lanl.gov/mpas_data/mpas_landice/test_cases/release_2.0/dome-2.0.tar.gz">2.0 Dome Test Case</a></td>  
-		<td><a href="http://oceans11.lanl.gov/mpas_data/mpas_landice/test_cases/release_2.0/EISMINT1-2.0.tar.gz">2.0 EISMINT Test Case</a></td>
+                <td> n/a </td>
+                <td> n/a </td>
 	</tr>
 </table>
 
