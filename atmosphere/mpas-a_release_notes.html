@@ -34,6 +34,34 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 6.3</span></big><br>
+      <big><span style="font-weight: bold;">11 May 2019</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This minor release addresses two issues in MPAS-Atmosphere.
+
+      <ol>
+      <li>The default setting for config_o3climatology was previously 'false',
+      which caused the model to use a single seasonal ozone profile everywhere
+      in the model domain when the RRTMG radiation schemes was used. The default
+      is now 'true', which causes the model to use the same monthly ozone
+      climatology for RRTMG as is used by the CAM radiation schemes.</li>
+
+      <li>Model simulations using a non-integer timestep would result in 'xtime'
+      variables in model output files that were incorrect, which caused problems
+      when trying to restart the model at the correct time. The xtime variable
+      is now correct when the valid time of output files has no fractional
+      seconds.</li>
+      </ol>
+      </p>
+      </td>
+    </tr>
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 6.2</span></big><br>
       <big><span style="font-weight: bold;">14 March 2019</span></big>
       </td>
