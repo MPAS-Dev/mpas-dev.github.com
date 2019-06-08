@@ -40,13 +40,22 @@ color:red;
 <h1>MPAS-Atmosphere Meshes</h1>
 
 <p class="noind">
-Several resolutions of quasi-uniform meshes, plus one refined mesh, are
-available for download.  Each download provides an SCVT mesh on the unit
+Several resolutions of quasi-uniform and refined meshes are
+available for download. Each download provides an SCVT mesh on the unit
 sphere, the mesh connectivity (graph.info) file for the mesh, and
 partitionings of the mesh (e.g., graph.info.part.32) for various MPI
-task counts.  Other meshes may be available upon request from the
-MPAS-Atmosphere developers by sending mail to
-<i>mpas-atmosphere-help</i> <b>AT</b> <i>googlegroups.com</i>.
+task counts.
+</p>
+
+<h2>Creating limited-area subsets of meshes</h2>
+
+<p class="noind">
+The MPAS-Atmosphere v7.0 release includes the capability to perform regional simulations.
+The regional meshes used in these simulations are formed as subsets of existing meshes.
+Currently, the <a href="https://github.com/MiCurry/MPAS-Limited-Area" target="_blank">MPAS-Limited-Area</a>
+Python tool is the supported method for generating regional meshes as subsets of any of the meshes
+available on this download page. Please refer to the documentation provided with MPAS-Limited-Area
+for details of its use.
 </p>
 
 <h2>Quasi-uniform meshes</h2>
