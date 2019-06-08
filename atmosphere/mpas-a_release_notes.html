@@ -34,6 +34,46 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 7.0</span></big><br>
+      <big><span style="font-weight: bold;">8 June 2019</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This major release of MPAS introduces significant new features in the MPAS-Atmosphere model
+      as well as minor fixes and clean-up to the software infrastructure.
+      </p>
+
+      <p>
+      Significant new features or changes to MPAS-Atmosphere v7.0 include:
+      <ul>
+      <li>The capability to perform limited-area simulations on the surface of the sphere.</li>
+      <li>An update to the physics schemes in the 'mesoscale_reference' suite to match the scheme versions in the Weather Research and Forecasting (WRF) model v4.0.3; the WSM6 scheme matches WRF v4.1.</li>
+      <li>The addition of two new upper absorbing layer formulations.</li>
+      <li>An initial relative humidity field that is computed w.r.t. ice for temperatures below freezing, consistent with the computation used for the model output files.</li>
+      <li>A fix for the communication of effective radii between the WSM6 and RRTMG schemes when <span class="terminal">config_microp_re=true</span>.</li>
+      <li>The ability to specify an explicit list of model level heights when constructing the vertical coordinate surfaces in the init_atmosphere core.</li>
+      <li>A change to the default sources of data for terrain height and land use category to GMTED2010 and MODIS 20-class, respectively.</li>
+      <li>Added MODIS-based sources for monthly albedo, monthly vegetation fraction, and maximum snow albedo; these MODIS datasets are now the default.</li>
+      </ul>
+      </p>
+      <p>
+      <i>IMPORTANT NOTE: The updated physics schemes require new look-up tables, in particular, for the Noah land-surface model. The <span class="terminal">checkout_data_files.sh</span> script that is run at build time should correctly update these tables, but tables in other run directories will need to be manually updated.</i>
+      </p>
+      <p>
+      Changes to the shared MPAS infrastructure include:
+      <ul>
+      <li>A new build target, llvm, to enable building MPAS with the clang and flang compilers.</li>
+      <li>Updates to the xlf build target to support building on Linux/POWER systems with the XL compilers.</li>
+      <li>Various minor fixes and clean-up.</li>
+      </ul>
+      </p>
+      </td>
+    </tr>
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 6.3</span></big><br>
       <big><span style="font-weight: bold;">11 May 2019</span></big>
       </td>
