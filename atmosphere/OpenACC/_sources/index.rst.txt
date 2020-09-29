@@ -12,10 +12,12 @@ compute nodes through the use of OpenACC directives.
 
 .. note:: *The use of the GPU-enabled MPAS-Atmosphere code assumes a thorough
    understanding of the standard MPAS-Atmosphere model. If you are new to
-   MPAS-Atmosphere, please begin with a standard release of the model.*
+   MPAS-Atmosphere, please begin with the CPU-only,* `v7.0 release`_ *of the model.*
 
 The remaining sections of this documentation provide details on how to
 obtain, compile, and run the code on :ref:`supported platforms<Supported platforms>`.
+
+.. _`v7.0 release`: https://github.com/MPAS-Dev/MPAS-Model/releases/tag/v7.0
 
 .. toctree::
    :maxdepth: 1
