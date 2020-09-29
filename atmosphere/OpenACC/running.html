@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Running &#8212; GPU-enabled MPAS-Atmosphere v6,gpu documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Known issues" href="known_issues.html" />
+    <link rel="prev" title="Compiling" href="compiling.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="running">
+<h1>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h1>
+<p>The set of MPI tasks running the RRTMG schemes on CPUs and the set of MPI tasks
+running the rest of the model on GPUs each use their own MPI intracommunicator,
+and except for the periodic exchange of model state or tendencies (as described
+in the <a class="reference internal" href="lagged_radiation.html#lagged-radiation"><span class="std std-ref">lagged radiation</span></a> section), these sets of MPI
+tasks work independently. Accordingly, two mesh partition files are required to
+run the model, and two log files are written.</p>
+<div class="section" id="environment-setup">
+<h2>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>The number of MPI ranks to assign to the GPU and CPU intracommunicators is determined
+at run time by environment variables. Before running the <code class="docutils literal notranslate"><span class="pre">atmosphere_model</span></code> executable,
+the following two environment variables must first be set:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MPAS_DYNAMICS_RANKS_PER_NODE</span></code> – the number of MPI ranks per node that will
+execute the model on GPUs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MPAS_RADIATION_RANKS_PER_NODE</span></code> – the number of MPI ranks per node that will
+run the RRTMG radiation schemes on CPUs.</p></li>
+</ul>
+<p>At present, both of these environment variables must be set to even integers,
+since the code assumes that each node has two sockets, across which CPU and GPU
+tasks should be evenly distributed. The sum of <em>MPAS_DYNAMICS_RANKS_PER_NODE</em>
+and <em>MPAS_RADIATION_RANKS_PER_NODE</em> should equal the total number of MPI ranks
+running on each node as determined by your job script.</p>
+</div>
+<div class="section" id="mesh-partition-files">
+<h2>Mesh partition files<a class="headerlink" href="#mesh-partition-files" title="Permalink to this headline">¶</a></h2>
+<p>In general, if the model is to be run across <em>n</em> nodes, then two mesh
+partition files will be required by the model: one file with (<em>n</em> × <em>MPAS_DYNAMICS_RANKS_PER_NODE</em>)
+partitions and another file with (<em>n</em> × <em>MPAS_RADIATION_RANKS_PER_NODE</em>) partitions.</p>
+</div>
+<div class="section" id="log-files">
+<h2>Log files<a class="headerlink" href="#log-files" title="Permalink to this headline">¶</a></h2>
+<p>In the standard release of MPAS-Atmosphere, all MPI ranks participate in all physics
+and dynamics computation, and only MPI rank 0 writes out a log file by default. When
+different partitions of the global MPI communicator peform different roles – either
+radiation computation on CPUs, or non-radiation physics and dynamics on GPUs – MPI
+rank 0 from the intracommunicators used by each of the two roles will create a log file.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">log.atmosphere.role01.0000.out</span></code> file contains log messages from MPI rank
+0 of the intracommunicator running on GPUs, while the <code class="docutils literal notranslate"><span class="pre">log.atmosphere.role02.0000.out</span></code>
+file contains log messages from MPI rank 0 of the intracommunicator running on CPUs.</p>
+</div>
+<div class="section" id="ornl-summit">
+<h2>ORNL Summit<a class="headerlink" href="#ornl-summit" title="Permalink to this headline">¶</a></h2>
+<p>On the ORNL <a class="reference external" href="https://www.olcf.ornl.gov/summit/">Summit</a> machine, the following job script may be used as a starting point:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#BSUB -o %J.out</span>
+<span class="c1">#BSUB -e %J.err</span>
+<span class="c1">#BSUB -nnodes 2</span>
+<span class="c1">#BSUB -alloc_flags &quot;gpumps smt1&quot;</span>
+<span class="c1">#BSUB -P XXXXX</span>
+<span class="c1">#BSUB -J MPAS_GPU</span>
+<span class="c1">#BSUB -q batch</span>
+<span class="c1">#BSUB -W 5</span>
+
+<span class="nb">export</span> <span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span> <span class="nv">OMP_STACKSIZE</span><span class="o">=</span>64M
+
+<span class="nb">export</span> <span class="nv">PAMI_ENABLE_STRIPING</span><span class="o">=</span><span class="m">0</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_ENABLE_OOO_AR</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_QP_SERVICE_LEVEL</span><span class="o">=</span><span class="m">8</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_ADAPTER_AFFINITY</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_DEVICE_NAME</span><span class="o">=</span><span class="s2">&quot;mlx5_0:1&quot;</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_DEVICE_NAME_1</span><span class="o">=</span><span class="s2">&quot;mlx5_3:1&quot;</span>
+
+<span class="nb">export</span> <span class="nv">MPAS_DYNAMICS_RANKS_PER_NODE</span><span class="o">=</span><span class="m">24</span>
+<span class="nb">export</span> <span class="nv">MPAS_RADIATION_RANKS_PER_NODE</span><span class="o">=</span><span class="m">16</span>
+
+jsrun --smpiargs<span class="o">=</span><span class="s2">&quot;-gpu&quot;</span> --stdio_mode<span class="o">=</span>prepended --nrs <span class="m">2</span> --cpu_per_rs <span class="m">42</span>  --gpu_per_rs <span class="m">6</span>  -d plane:40 --bind packed:1 --np <span class="m">80</span>  ./unset.sh ./atmosphere_model
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">unset.sh</span></code> script referenced in the <code class="docutils literal notranslate"><span class="pre">jsrun</span></code> command contains the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES
+
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES0
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES1
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES2
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES3
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES4
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES5
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES6
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES7
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES8
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES9
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES10
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES11
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES12
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES13
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES14
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES15
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES16
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES17
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES18
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES19
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES20
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES21
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES22
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES23
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES24
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES25
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES26
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES27
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES28
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES29
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES30
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES31
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES32
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES33
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES34
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES35
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES36
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES37
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES38
+<span class="nb">unset</span> CUDA_VISIBLE_DEVICES39
+
+<span class="nb">export</span> <span class="nv">PAMI_ENABLE_STRIPING</span><span class="o">=</span><span class="m">0</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_ENABLE_OOO_AR</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_QP_SERVICE_LEVEL</span><span class="o">=</span><span class="m">8</span>
+<span class="nb">export</span> <span class="nv">PAMI_IBV_ADAPTER_AFFINITY</span><span class="o">=</span><span class="m">1</span>
+
+<span class="nb">let</span> <span class="nv">available_cpus</span><span class="o">=</span><span class="m">168</span>
+<span class="nb">let</span> <span class="nv">socket1_start</span><span class="o">=</span><span class="m">88</span>
+
+<span class="nv">lrank</span><span class="o">=</span><span class="si">${</span><span class="nv">OMPI_COMM_WORLD_LOCAL_RANK</span><span class="si">}</span>
+<span class="nv">lsize</span><span class="o">=</span><span class="si">${</span><span class="nv">OMPI_COMM_WORLD_LOCAL_SIZE</span><span class="si">}</span>
+<span class="nb">let</span> <span class="nv">x2rank</span><span class="o">=</span><span class="m">2</span>*<span class="nv">$lrank</span>
+<span class="nb">let</span> <span class="nv">socket</span><span class="o">=</span><span class="nv">$x2rank</span>/<span class="nv">$lsize</span>
+<span class="nb">let</span> <span class="nv">cpus_per_rank</span><span class="o">=</span><span class="nv">$available_cpus</span>/<span class="nv">$lsize</span>
+
+<span class="nb">let</span> <span class="nv">num_threads</span><span class="o">=</span><span class="nv">$OMP_NUM_THREADS</span>
+<span class="nb">let</span> <span class="nv">stride</span><span class="o">=</span><span class="nv">$cpus_per_rank</span>/<span class="nv">$num_threads</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$socket</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">export</span> <span class="nv">PAMI_IBV_DEVICE_NAME</span><span class="o">=</span>mlx5_0:1
+  <span class="nb">let</span> <span class="nv">start_cpu</span><span class="o">=</span><span class="nv">$lrank</span>*<span class="nv">$cpus_per_rank</span>
+  <span class="nb">let</span> <span class="nv">stop_cpu</span><span class="o">=</span><span class="nv">$start_cpu</span>+<span class="nv">$cpus_per_rank</span>-1
+<span class="k">else</span>
+  <span class="nb">export</span> <span class="nv">PAMI_IBV_DEVICE_NAME</span><span class="o">=</span>mlx5_3:1
+  <span class="nb">let</span> <span class="nv">half_size</span><span class="o">=</span><span class="nv">$lsize</span>/2
+  <span class="nb">let</span> <span class="nv">srank</span><span class="o">=</span><span class="nv">$lrank</span>-<span class="nv">$half_size</span>
+  <span class="nb">let</span> <span class="nv">start_cpu</span><span class="o">=</span><span class="nv">$socket1_start</span>+<span class="nv">$srank</span>*<span class="nv">$cpus_per_rank</span>
+  <span class="nb">let</span> <span class="nv">stop_cpu</span><span class="o">=</span><span class="nv">$start_cpu</span>+<span class="nv">$cpus_per_rank</span>-1
+<span class="k">fi</span>
+
+<span class="nb">export</span> <span class="nv">GOMP_CPU_AFFINITY</span><span class="o">=</span><span class="nv">$start_cpu</span>-<span class="nv">$stop_cpu</span>:<span class="nv">$stride</span>
+
+<span class="nb">exec</span> taskset -c <span class="nv">$start_cpu</span>-<span class="nv">$stop_cpu</span> <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">GPU-enabled MPAS-Atmosphere</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">Important notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lagged_radiation.html">Lagged radiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported_platforms.html">Supported platforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloading.html">Getting the code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compiling.html">Compiling</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Requesting help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="compiling.html" title="previous chapter">Compiling</a></li>
+      <li>Next: <a href="known_issues.html" title="next chapter">Known issues</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, The University Corporation for Atmospheric Research.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/running.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

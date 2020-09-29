@@ -1,0 +1,13 @@
+Known issues
+============
+
+As issues arise with the GPU-enabled MPAS-Atmosphere model, links to GitHub
+Issues and Pull Requests that address those Issues will be added to this page.
+
+*There are currently no known issues.*
+
+If you believe you have identified an issue with the code, please begin by
+raising the issue for discussion on the "GPU/OpenACC" section of the
+`WRF/MPAS support forum`_ .
+
+.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/phpBB3/viewforum.php?f=102

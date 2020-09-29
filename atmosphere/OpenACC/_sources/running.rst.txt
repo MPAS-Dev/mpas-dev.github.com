@@ -1,0 +1,166 @@
+Running
+=======
+
+The set of MPI tasks running the RRTMG schemes on CPUs and the set of MPI tasks
+running the rest of the model on GPUs each use their own MPI intracommunicator,
+and except for the periodic exchange of model state or tendencies (as described
+in the :ref:`lagged radiation<Lagged radiation>` section), these sets of MPI
+tasks work independently. Accordingly, two mesh partition files are required to
+run the model, and two log files are written.
+
+Environment setup
+-----------------
+
+The number of MPI ranks to assign to the GPU and CPU intracommunicators is determined
+at run time by environment variables. Before running the ``atmosphere_model`` executable,
+the following two environment variables must first be set:
+
+* ``MPAS_DYNAMICS_RANKS_PER_NODE`` -- the number of MPI ranks per node that will
+  execute the model on GPUs.
+* ``MPAS_RADIATION_RANKS_PER_NODE`` -- the number of MPI ranks per node that will
+  run the RRTMG radiation schemes on CPUs.
+
+At present, both of these environment variables must be set to even integers,
+since the code assumes that each node has two sockets, across which CPU and GPU
+tasks should be evenly distributed. The sum of *MPAS_DYNAMICS_RANKS_PER_NODE*
+and *MPAS_RADIATION_RANKS_PER_NODE* should equal the total number of MPI ranks
+running on each node as determined by your job script.
+
+Mesh partition files
+--------------------
+
+In general, if the model is to be run across *n* nodes, then two mesh
+partition files will be required by the model: one file with (*n* |times| *MPAS_DYNAMICS_RANKS_PER_NODE*)
+partitions and another file with (*n* |times| *MPAS_RADIATION_RANKS_PER_NODE*) partitions.
+
+.. |times| unicode:: U+00D7 .. X
+
+Log files
+---------
+
+In the standard release of MPAS-Atmosphere, all MPI ranks participate in all physics
+and dynamics computation, and only MPI rank 0 writes out a log file by default. When
+different partitions of the global MPI communicator peform different roles -- either
+radiation computation on CPUs, or non-radiation physics and dynamics on GPUs -- MPI
+rank 0 from the intracommunicators used by each of the two roles will create a log file.
+
+The ``log.atmosphere.role01.0000.out`` file contains log messages from MPI rank
+0 of the intracommunicator running on GPUs, while the ``log.atmosphere.role02.0000.out``
+file contains log messages from MPI rank 0 of the intracommunicator running on CPUs.
+
+
+ORNL Summit
+-----------
+
+On the ORNL Summit_ machine, the following job script may be used as a starting point:
+
+.. code-block:: bash
+
+    #!/bin/bash
+    #BSUB -o %J.out
+    #BSUB -e %J.err
+    #BSUB -nnodes 2
+    #BSUB -alloc_flags "gpumps smt1"
+    #BSUB -P XXXXX
+    #BSUB -J MPAS_GPU
+    #BSUB -q batch
+    #BSUB -W 5
+
+    export OMP_NUM_THREADS=1
+    export OMP_STACKSIZE=64M
+
+    export PAMI_ENABLE_STRIPING=0
+    export PAMI_IBV_ENABLE_OOO_AR=1
+    export PAMI_IBV_QP_SERVICE_LEVEL=8
+    export PAMI_IBV_ADAPTER_AFFINITY=1
+    export PAMI_IBV_DEVICE_NAME="mlx5_0:1"
+    export PAMI_IBV_DEVICE_NAME_1="mlx5_3:1"
+
+    export MPAS_DYNAMICS_RANKS_PER_NODE=24
+    export MPAS_RADIATION_RANKS_PER_NODE=16
+
+    jsrun --smpiargs="-gpu" --stdio_mode=prepended --nrs 2 --cpu_per_rs 42  --gpu_per_rs 6  -d plane:40 --bind packed:1 --np 80  ./unset.sh ./atmosphere_model
+
+The ``unset.sh`` script referenced in the ``jsrun`` command contains the following:
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    unset CUDA_VISIBLE_DEVICES
+
+    unset CUDA_VISIBLE_DEVICES0
+    unset CUDA_VISIBLE_DEVICES1
+    unset CUDA_VISIBLE_DEVICES2
+    unset CUDA_VISIBLE_DEVICES3
+    unset CUDA_VISIBLE_DEVICES4
+    unset CUDA_VISIBLE_DEVICES5
+    unset CUDA_VISIBLE_DEVICES6
+    unset CUDA_VISIBLE_DEVICES7
+    unset CUDA_VISIBLE_DEVICES8
+    unset CUDA_VISIBLE_DEVICES9
+    unset CUDA_VISIBLE_DEVICES10
+    unset CUDA_VISIBLE_DEVICES11
+    unset CUDA_VISIBLE_DEVICES12
+    unset CUDA_VISIBLE_DEVICES13
+    unset CUDA_VISIBLE_DEVICES14
+    unset CUDA_VISIBLE_DEVICES15
+    unset CUDA_VISIBLE_DEVICES16
+    unset CUDA_VISIBLE_DEVICES17
+    unset CUDA_VISIBLE_DEVICES18
+    unset CUDA_VISIBLE_DEVICES19
+    unset CUDA_VISIBLE_DEVICES20
+    unset CUDA_VISIBLE_DEVICES21
+    unset CUDA_VISIBLE_DEVICES22
+    unset CUDA_VISIBLE_DEVICES23
+    unset CUDA_VISIBLE_DEVICES24
+    unset CUDA_VISIBLE_DEVICES25
+    unset CUDA_VISIBLE_DEVICES26
+    unset CUDA_VISIBLE_DEVICES27
+    unset CUDA_VISIBLE_DEVICES28
+    unset CUDA_VISIBLE_DEVICES29
+    unset CUDA_VISIBLE_DEVICES30
+    unset CUDA_VISIBLE_DEVICES31
+    unset CUDA_VISIBLE_DEVICES32
+    unset CUDA_VISIBLE_DEVICES33
+    unset CUDA_VISIBLE_DEVICES34
+    unset CUDA_VISIBLE_DEVICES35
+    unset CUDA_VISIBLE_DEVICES36
+    unset CUDA_VISIBLE_DEVICES37
+    unset CUDA_VISIBLE_DEVICES38
+    unset CUDA_VISIBLE_DEVICES39
+
+    export PAMI_ENABLE_STRIPING=0
+    export PAMI_IBV_ENABLE_OOO_AR=1
+    export PAMI_IBV_QP_SERVICE_LEVEL=8
+    export PAMI_IBV_ADAPTER_AFFINITY=1
+
+    let available_cpus=168
+    let socket1_start=88
+
+    lrank=${OMPI_COMM_WORLD_LOCAL_RANK}
+    lsize=${OMPI_COMM_WORLD_LOCAL_SIZE}
+    let x2rank=2*$lrank
+    let socket=$x2rank/$lsize
+    let cpus_per_rank=$available_cpus/$lsize
+
+    let num_threads=$OMP_NUM_THREADS
+    let stride=$cpus_per_rank/$num_threads
+
+    if [ "$socket" = 0 ]; then
+      export PAMI_IBV_DEVICE_NAME=mlx5_0:1
+      let start_cpu=$lrank*$cpus_per_rank
+      let stop_cpu=$start_cpu+$cpus_per_rank-1
+    else
+      export PAMI_IBV_DEVICE_NAME=mlx5_3:1
+      let half_size=$lsize/2
+      let srank=$lrank-$half_size
+      let start_cpu=$socket1_start+$srank*$cpus_per_rank
+      let stop_cpu=$start_cpu+$cpus_per_rank-1
+    fi
+
+    export GOMP_CPU_AFFINITY=$start_cpu-$stop_cpu:$stride
+
+    exec taskset -c $start_cpu-$stop_cpu "$@"
+
+.. _Summit: https://www.olcf.ornl.gov/summit/

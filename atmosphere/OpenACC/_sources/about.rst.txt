@@ -1,0 +1,21 @@
+Important notes
+===============
+
+Besides supporting execution on GPUs, there are several other points worth
+noting about the GPU-enabled MPAS-Atmosphere code:
+
+* The GPU-enabled code branch is based on MPAS v6.x, and while there are plans
+  to bring the code up-to-date with v7.0 by early 2021, anyone with a need for
+  capabilities or fixes found only in MPAS v7.0 (*e.g.,* limited-area simulation)
+  may prefer to use the standard release of MPAS-Atmosphere.
+
+* MPAS-Atmosphere is the only *core* that is supported (or expected to work)
+  in this code branch.
+
+* In order to make use of all available compute resource on a node, this code
+  branch contains changes to run the RRTMG radiation schemes on CPUs using
+  a lagged model state, while the rest of the model runs on GPUs. See the section
+  on :ref:`lagged radiation<Lagged radiation>` for more details.
+
+* Only a subset of physics schemes are supported; generally,
+  the *mesoscale_reference* physics suite should be used.

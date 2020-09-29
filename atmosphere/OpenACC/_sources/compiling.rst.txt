@@ -1,0 +1,35 @@
+Compiling
+=========
+
+Compilation of the GPU-enabled MPAS-Atmosphere code is different from compiling
+a standard release of MPAS-Atmosphere in only one respect: The option ``OPENACC=true``
+must be added to the compilation command. For example::
+
+    make -j 4 pgi CORE=atmosphere USE_PIO2=true OPENACC=true
+
+Through the specification of ``OPENACC=true`` in the build command, additional
+compiler flags will be added. At present, these include ``-Mnofma -acc -ta=tesla:cc70 -Minfo=accel``.
+
+As described in the :ref:`supported platform<Supported platforms>` section, only
+the PGI compilers are supported at present; accordingly, the use of ``OPENACC=true``
+only adds additional flags for the ``pgi`` build target.
+
+If the model was successfully compiled for execution on GPUs, the build summary
+should indicate that OpenACC was enabled:
+
+.. code-block:: text
+    :emphasize-lines: 8
+
+    *******************************************************************************
+    MPAS was built with default double-precision reals.
+    Debugging is off.
+    Parallel version is on.
+    Papi libraries are off.
+    TAU Hooks are off.
+    MPAS was built without OpenMP support.
+    MPAS was built with OpenACC enabled.
+    MPAS was built with .F files.
+    The native timer interface is being used
+    Using the PIO 2 library.
+    *******************************************************************************
+

@@ -1,0 +1,15 @@
+Requesting help
+===============
+
+Provided you are attempting to use the GPU-enabled MPAS-Atmosphere code on a
+:ref:`supported platform<Supported platforms>`, a special section of the
+`WRF/MPAS support forum`_ is available to discuss any issues you may encounter.
+Support resources are limited, and community engagement on the forum is
+encouraged.
+
+.. note:: *In general, please* **do not** *create GitHub Issues for the purpose
+   of asking for help. GitHub Issues for the MPAS-Model repository are intended
+   to track code issues that in principle can be addressed through fixes to the
+   code.*
+
+.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/phpBB3/viewforum.php?f=102

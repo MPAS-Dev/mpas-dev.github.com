@@ -1,0 +1,4 @@
+Model structure
+===============
+
+Details on how the code is structured to make use of all available CPU and GPU resources.

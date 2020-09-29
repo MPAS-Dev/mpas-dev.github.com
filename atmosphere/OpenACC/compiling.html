@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Compiling &#8212; GPU-enabled MPAS-Atmosphere v6,gpu documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running" href="running.html" />
+    <link rel="prev" title="Getting the code" href="downloading.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="compiling">
+<h1>Compiling<a class="headerlink" href="#compiling" title="Permalink to this headline">¶</a></h1>
+<p>Compilation of the GPU-enabled MPAS-Atmosphere code is different from compiling
+a standard release of MPAS-Atmosphere in only one respect: The option <code class="docutils literal notranslate"><span class="pre">OPENACC=true</span></code>
+must be added to the compilation command. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">j</span> <span class="mi">4</span> <span class="n">pgi</span> <span class="n">CORE</span><span class="o">=</span><span class="n">atmosphere</span> <span class="n">USE_PIO2</span><span class="o">=</span><span class="n">true</span> <span class="n">OPENACC</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>Through the specification of <code class="docutils literal notranslate"><span class="pre">OPENACC=true</span></code> in the build command, additional
+compiler flags will be added. At present, these include <code class="docutils literal notranslate"><span class="pre">-Mnofma</span> <span class="pre">-acc</span> <span class="pre">-ta=tesla:cc70</span> <span class="pre">-Minfo=accel</span></code>.</p>
+<p>As described in the <a class="reference internal" href="supported_platforms.html#supported-platforms"><span class="std std-ref">supported platform</span></a> section, only
+the PGI compilers are supported at present; accordingly, the use of <code class="docutils literal notranslate"><span class="pre">OPENACC=true</span></code>
+only adds additional flags for the <code class="docutils literal notranslate"><span class="pre">pgi</span></code> build target.</p>
+<p>If the model was successfully compiled for execution on GPUs, the build summary
+should indicate that OpenACC was enabled:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>*******************************************************************************
+MPAS was built with default double-precision reals.
+Debugging is off.
+Parallel version is on.
+Papi libraries are off.
+TAU Hooks are off.
+MPAS was built without OpenMP support.
+<span class="hll">MPAS was built with OpenACC enabled.
+</span>MPAS was built with .F files.
+The native timer interface is being used
+Using the PIO 2 library.
+*******************************************************************************
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">GPU-enabled MPAS-Atmosphere</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">Important notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lagged_radiation.html">Lagged radiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported_platforms.html">Supported platforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloading.html">Getting the code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running.html">Running</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Requesting help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="downloading.html" title="previous chapter">Getting the code</a></li>
+      <li>Next: <a href="running.html" title="next chapter">Running</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, The University Corporation for Atmospheric Research.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/compiling.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

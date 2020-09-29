@@ -1,0 +1,13 @@
+Getting the code
+================
+
+The GPU-enabled MPAS-Atmosphere model code is available as a branch in the same
+MPAS-Model repository as the standard releases. The simplest way to obtain the code is by cloning the repository from the command-line::
+
+    git clone https://github.com/MPAS-Dev/MPAS-Model.git
+
+After cloning the MPAS-Model repository, check out the **atmosphere/v6.x-openacc** branch::
+
+    cd MPAS-Model
+    git checkout atmosphere/v6.x-openacc
+

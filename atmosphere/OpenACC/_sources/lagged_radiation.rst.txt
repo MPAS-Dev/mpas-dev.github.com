@@ -1,0 +1,51 @@
+Lagged radiation
+================
+
+In order to make more effective use of the full computational hardware
+available on a node, and also to reduce GPU memory requirements, the RRTMG
+radiation schemes are always run on the CPUs of a node, while the rest of the
+physics and the dynamics are run on the GPUs of a node.
+
+In the first model timestep of a simulation, the model state on the CPUs is
+updated, the radiation schemes are run to produce tendencies due to radiation,
+and those tendencies are transferred to the GPUs for use in the first dynamics
+time step.
+
+Thereafter, at the radiation calling interval specified in the
+``namelist.atmosphere`` file, the current model state is transferred to the MPI
+tasks running the RRTMG schemes, and radiation tendencies computed from the
+lagged model state are transferred to the MPI tasks running the dynamics.  In
+this way, the model dynamics running on the GPUs applies physics tendencies
+that were computed from a model state valid one radiation calling interval in
+the past.
+
+A timeline of the model execution is illustrated in the figure, below.
+
+.. figure:: images/lagged_radiation.svg
+   :alt: Schematic representation of lagged radiation
+   :align: center
+   :scale: 100%
+
+   Figure: Overlap of radiation executing on CPUs with other physics and dynamics
+   executing on GPUs. :math:`\phi^m` represents the model state after :math:`m`
+   dynamics steps, and :math:`\dot{\phi}^m_R` represents the tendencies due to
+   radiation computed from :math:`\phi^m`. The ratio of the radiation interval
+   to the dynamics time step is :math:`n`.
+
+The figure also illustrates an important point regarding model throughput: the time
+spent by the CPUs to call the RRTMG schemes should ideally match the time spent by
+the GPUs to run the rest of the model during each radiation coupling interval.
+
+There are several parameters that may be used to balance the radiation computation
+with the computation in the rest of the model:
+
+1. The radiation calling interval, specified in the ``namelist.atmosphere`` file
+   with the ``config_radtlw_interval`` and ``config_radtsw_interval`` options;
+
+2. the number of MPI ranks assigned to run the RRTMG schemes on CPUs; and
+
+3. the number of MPI ranks assigned to run the non-radiation physics and dynamics
+   on GPUs.
+
+The specification of the number of MPI ranks that will run on CPUs and on GPUs
+is described in more detail in the section on :ref:`running the model<Running>`.

@@ -1,0 +1,15 @@
+Acknowledgements
+================
+
+The GPU-enabled MPAS-Atmosphere branch is the result of contributions by the
+Computational and Information Systems Laboratory (CISL_) and the Mesoscale and
+Microscale Meteorology Laboratory (MMM_) at the National Center for Atmospheric
+Research (NCAR_), the `University of Wyoming`_, and NVIDIA_. This work was supported
+by `The Weather Company`_, an IBM Business.
+
+.. _CISL: https://www2.cisl.ucar.edu/
+.. _MMM: https://www.mmm.ucar.edu/
+.. _NCAR: https://ncar.ucar.edu/
+.. _`University of Wyoming`: http://www.uwyo.edu/
+.. _NVIDIA: https://www.nvidia.com/
+.. _`The Weather Company`: https://www.ibm.com/weather/

@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Lagged radiation &#8212; GPU-enabled MPAS-Atmosphere v6,gpu documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Supported platforms" href="supported_platforms.html" />
+    <link rel="prev" title="Important notes" href="about.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="lagged-radiation">
+<h1>Lagged radiation<a class="headerlink" href="#lagged-radiation" title="Permalink to this headline">¶</a></h1>
+<p>In order to make more effective use of the full computational hardware
+available on a node, and also to reduce GPU memory requirements, the RRTMG
+radiation schemes are always run on the CPUs of a node, while the rest of the
+physics and the dynamics are run on the GPUs of a node.</p>
+<p>In the first model timestep of a simulation, the model state on the CPUs is
+updated, the radiation schemes are run to produce tendencies due to radiation,
+and those tendencies are transferred to the GPUs for use in the first dynamics
+time step.</p>
+<p>Thereafter, at the radiation calling interval specified in the
+<code class="docutils literal notranslate"><span class="pre">namelist.atmosphere</span></code> file, the current model state is transferred to the MPI
+tasks running the RRTMG schemes, and radiation tendencies computed from the
+lagged model state are transferred to the MPI tasks running the dynamics.  In
+this way, the model dynamics running on the GPUs applies physics tendencies
+that were computed from a model state valid one radiation calling interval in
+the past.</p>
+<p>A timeline of the model execution is illustrated in the figure, below.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="_images/lagged_radiation.svg"><img alt="Schematic representation of lagged radiation" src="_images/lagged_radiation.svg" /></a>
+<p class="caption"><span class="caption-text">Figure: Overlap of radiation executing on CPUs with other physics and dynamics
+executing on GPUs. <span class="math notranslate nohighlight">\(\phi^m\)</span> represents the model state after <span class="math notranslate nohighlight">\(m\)</span>
+dynamics steps, and <span class="math notranslate nohighlight">\(\dot{\phi}^m_R\)</span> represents the tendencies due to
+radiation computed from <span class="math notranslate nohighlight">\(\phi^m\)</span>. The ratio of the radiation interval
+to the dynamics time step is <span class="math notranslate nohighlight">\(n\)</span>.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>The figure also illustrates an important point regarding model throughput: the time
+spent by the CPUs to call the RRTMG schemes should ideally match the time spent by
+the GPUs to run the rest of the model during each radiation coupling interval.</p>
+<p>There are several parameters that may be used to balance the radiation computation
+with the computation in the rest of the model:</p>
+<ol class="arabic simple">
+<li><p>The radiation calling interval, specified in the <code class="docutils literal notranslate"><span class="pre">namelist.atmosphere</span></code> file
+with the <code class="docutils literal notranslate"><span class="pre">config_radtlw_interval</span></code> and <code class="docutils literal notranslate"><span class="pre">config_radtsw_interval</span></code> options;</p></li>
+<li><p>the number of MPI ranks assigned to run the RRTMG schemes on CPUs; and</p></li>
+<li><p>the number of MPI ranks assigned to run the non-radiation physics and dynamics
+on GPUs.</p></li>
+</ol>
+<p>The specification of the number of MPI ranks that will run on CPUs and on GPUs
+is described in more detail in the section on <a class="reference internal" href="running.html#running"><span class="std std-ref">running the model</span></a>.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">GPU-enabled MPAS-Atmosphere</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">Important notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lagged radiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported_platforms.html">Supported platforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloading.html">Getting the code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compiling.html">Compiling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running.html">Running</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Requesting help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">Acknowledgements</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="about.html" title="previous chapter">Important notes</a></li>
+      <li>Next: <a href="supported_platforms.html" title="next chapter">Supported platforms</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, The University Corporation for Atmospheric Research.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/lagged_radiation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
