@@ -7,6 +7,7 @@
     <title>Running &#8212; GPU-enabled MPAS-Atmosphere v6,gpu documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -68,13 +69,13 @@ partitions and another file with (<em>n</em> × <em>MPAS_RADIATION_RANKS_PER_NOD
 <div class="section" id="log-files">
 <h2>Log files<a class="headerlink" href="#log-files" title="Permalink to this headline">¶</a></h2>
 <p>In the standard release of MPAS-Atmosphere, all MPI ranks participate in all physics
-and dynamics computation, and only MPI rank 0 writes out a log file by default. When
+and dynamics computation, and only MPI rank <span class="zero">0</span> writes out a log file by default. When
 different partitions of the global MPI communicator peform different roles – either
 radiation computation on CPUs, or non-radiation physics and dynamics on GPUs – MPI
-rank 0 from the intracommunicators used by each of the two roles will create a log file.</p>
+rank <span class="zero">0</span> from the intracommunicators used by each of the two roles will create a log file.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">log.atmosphere.role01.0000.out</span></code> file contains log messages from MPI rank
-0 of the intracommunicator running on GPUs, while the <code class="docutils literal notranslate"><span class="pre">log.atmosphere.role02.0000.out</span></code>
-file contains log messages from MPI rank 0 of the intracommunicator running on CPUs.</p>
+<span class="zero">0</span> of the intracommunicator running on GPUs, while the <code class="docutils literal notranslate"><span class="pre">log.atmosphere.role02.0000.out</span></code>
+file contains log messages from MPI rank <span class="zero">0</span> of the intracommunicator running on CPUs.</p>
 </div>
 <div class="section" id="ornl-summit">
 <h2>ORNL Summit<a class="headerlink" href="#ornl-summit" title="Permalink to this headline">¶</a></h2>

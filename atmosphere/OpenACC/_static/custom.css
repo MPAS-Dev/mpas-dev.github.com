@@ -1,1 +1,8 @@
-/* This file intentionally left blank. */
+.zero {
+    font-family: Times, serif;
+    font-size: 17px;
+    background-color: #fff;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}

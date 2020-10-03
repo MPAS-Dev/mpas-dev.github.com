@@ -1,3 +1,5 @@
+.. role:: zero
+
 Running
 =======
 
@@ -39,14 +41,14 @@ Log files
 ---------
 
 In the standard release of MPAS-Atmosphere, all MPI ranks participate in all physics
-and dynamics computation, and only MPI rank 0 writes out a log file by default. When
+and dynamics computation, and only MPI rank :zero:`0` writes out a log file by default. When
 different partitions of the global MPI communicator peform different roles -- either
 radiation computation on CPUs, or non-radiation physics and dynamics on GPUs -- MPI
-rank 0 from the intracommunicators used by each of the two roles will create a log file.
+rank :zero:`0` from the intracommunicators used by each of the two roles will create a log file.
 
 The ``log.atmosphere.role01.0000.out`` file contains log messages from MPI rank
-0 of the intracommunicator running on GPUs, while the ``log.atmosphere.role02.0000.out``
-file contains log messages from MPI rank 0 of the intracommunicator running on CPUs.
+:zero:`0` of the intracommunicator running on GPUs, while the ``log.atmosphere.role02.0000.out``
+file contains log messages from MPI rank :zero:`0` of the intracommunicator running on CPUs.
 
 
 ORNL Summit
