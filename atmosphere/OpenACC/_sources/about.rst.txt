@@ -17,5 +17,4 @@ noting about the GPU-enabled MPAS-Atmosphere code:
   a lagged model state, while the rest of the model runs on GPUs. See the section
   on :ref:`lagged radiation<Lagged radiation>` for more details.
 
-* Only a subset of physics schemes are supported; generally,
-  the *mesoscale_reference* physics suite should be used.
+* At present, only the *mesoscale_reference* physics suite is supported.
