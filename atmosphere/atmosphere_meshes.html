@@ -102,52 +102,51 @@ for details of its use.
 
 <h3 class="ind">10-km mesh (5898242 horizontal grid cells)</h3>
 
-<p class="ind2">Important note: The 3-d fields that exist in the model at higher resolution can easily exceed the
+<p class="ind2">
+(Download link below following <em>Important notes</em>).
+</p>
+
+<h3 class="ind">4-km mesh (36864002 horizontal grid cells)</h3>
+
+<p class="ind2">
+(Download link below following <em>Important notes</em>).
+</p>
+
+<h3 class="ind">3-km mesh (65536002 horizontal grid cells)</h3>
+
+<p class="ind2">
+(Download link below following <em>Important notes</em>).
+</p>
+
+<h3 class="ind">Important notes for dense meshes</h3>
+
+<p class="ind">The 3-d fields that exist in the model at higher resolution can easily exceed the
 4 GB limit imposed by the classic netCDF format. When creating atmospheric initial conditions (i.e., the "init.nc" file),
 and when writing output streams from the model with 3-d fields, <b>it is necessary to use an "io_type" that supports
 large variables, such as "pnetcdf,cdf5" or "netcdf4"</b>. For more information on selecting the "io_type" of a stream,
 refer to Chapter 5 in the Users' Guide.</p>
 
-<p class="ind2">Additionally, depending on the amount of memory available, it may be necessary to interpolate the static,
+<p class="ind">Additionally, depending on the amount of memory available, it may be necessary to interpolate the static,
 geographical fields in parallel. In the v5.0 release, doing this properly <b>requires the use of a special, convex mesh
 decomposition file -- a regular METIS partition file will not give correct results!</b> In order to process static fields
 in parallel, one must:
 </p>
 
-<p class="ind2">
+<p class="ind">
 (1) comment-out the code between <a href="https://github.com/MPAS-Dev/MPAS-Model/blob/v7.0/src/core_init_atmosphere/mpas_init_atm_cases.F#L217-L222">lines 217 and 222</a> in src/core_init_atmosphere/mpas_init_atm_cases.F that ordinarily prevents the parallel processing of static fields; and
 </p>
 
-<p class="ind2">
-(2) ensure that the "cvt" partition file prefix (e.g., x1.5898242.cvt.part.) is specified in the config_block_decomp_file_prefix
-variable in namelist.init_atmosphere.
+<p class="ind">
+(2) ensure that the "cvt" partition file prefix (e.g., x1.5898242.cvt.part., x1.65536002.cvt.part., etc.) is specified
+in the config_block_decomp_file_prefix variable in namelist.init_atmosphere.
 </p>
 
 <p class="ind2">
 <a href="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x1.5898242.tar.gz">Download the 10-km mesh</a> (4380 MB)
 </p>
 
-<h3 class="ind">3-km mesh (65536002 horizontal grid cells)</h3>
-
-<p class="ind2">Important note: The 3-d fields that exist in the model at higher resolution can easily exceed the
-4 GB limit imposed by the classic netCDF format. When creating atmospheric initial conditions (i.e., the "init.nc" file),
-and when writing output streams from the model with 3-d fields, <b>it is necessary to use an "io_type" that supports
-large variables, such as "pnetcdf,cdf5" or "netcdf4"</b>. For more information on selecting the "io_type" of a stream,
-refer to Chapter 5 in the Users' Guide.</p>
-
-<p class="ind2">Additionally, depending on the amount of memory available, it may be necessary to interpolate the static,
-geographical fields in parallel. In the v5.0 release, doing this properly <b>requires the use of a special, convex mesh
-decomposition file -- a regular METIS partition file will not give correct results!</b> In order to process static fields
-in parallel, one must:
-</p>
-
 <p class="ind2">
-(1) comment-out the code between <a href="https://github.com/MPAS-Dev/MPAS-Model/blob/v7.0/src/core_init_atmosphere/mpas_init_atm_cases.F#L217-L222">lines 217 and 222</a> in src/core_init_atmosphere/mpas_init_atm_cases.F that ordinarily prevents the parallel processing of static fields; and
-</p>
-
-<p class="ind2">
-(2) ensure that the "cvt" partition file prefix (e.g., x1.65536002.cvt.part.) is specified in the config_block_decomp_file_prefix
-variable in namelist.init_atmosphere.
+<a href="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x1.36864002.tar.gz">Download the 4-km mesh</a> (23720 MB)
 </p>
 
 <p class="ind2">
