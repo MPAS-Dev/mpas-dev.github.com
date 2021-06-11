@@ -1,4 +1,4 @@
 This repository houses the MPAS-Dev organization website.
 
-HTML that is pushed to this repository is automatically published at [the mpas-dev website](http://mpas-dev.github.com)
+HTML that is pushed to this repository is automatically published at [https://mpas-dev.github.io](https://mpas-dev.github.io).
 
