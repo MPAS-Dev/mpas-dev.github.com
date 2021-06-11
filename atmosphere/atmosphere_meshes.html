@@ -232,7 +232,7 @@ region spanning approximately 16 degrees of latitude/longitude.
 <a href="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x20.835586.tar.gz">Download the mesh</a> (628 MB) 
 </p>
 
-<h3 class="ind">15-km &#8211; 3-km mesh</h3> 
+<h3 class="ind">15-km &#8211; 3-km mesh (Circular refinement)</h3> 
 <p class="ind2"> 
 This mesh contains 6488066 horizontal grid cells, with the circular refinement
 region spanning approximately 60 degrees of latitude/longitude. When using this mesh, <b class="red">there are several
@@ -273,6 +273,49 @@ be taken to use enough compute nodes to avoid running out of memory. </li>
 <img src="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x5.6488066.grid.png" width="450">
 <br> 
 <a href="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x5.6488066.tar.gz">Download the mesh</a> (4560 MB) 
+</p>
+
+<h3 class="ind">15-km &#8211; 3-km mesh (Elliptical refinement)</h3> 
+<p class="ind2"> 
+This mesh contains x5.8060930 horizontal grid cells, with the elliptical refinement
+region spanning approximately 60 degrees of latitude and 80 degrees of longitude. When using this mesh, <b class="red">there are several
+crucial changes that must be made to pre-processing steps and to the model configuration</b>:
+<br>
+<br>
+(1) The 3-d fields that exist in the model at higher resolution can easily exceed the
+4 GB limit imposed by the classic netCDF format. When creating atmospheric initial conditions (i.e., the "init.nc" file),
+and when writing output streams from the model with 3-d fields, <b>it is necessary to use an "io_type" that supports
+large variables, such as "pnetcdf,cdf5" or "netcdf4"</b>. For more information on selecting the "io_type" of a stream,
+refer to Chapter 5 in the Users' Guide.
+<br>
+<br>
+(2) Depending on the amount of memory available, it may be necessary to interpolate the static,
+geographical fields in parallel. In the v5.0 release, doing this properly <b>requires the use of a special, convex mesh
+decomposition file -- a regular METIS partition file will not give correct results!</b> In order to process static fields
+in parallel, one must:
+<br>
+</p>
+<p class="ind3">
+(1) comment-out the code between <a href="https://github.com/MPAS-Dev/MPAS-Model/blob/v7.0/src/core_init_atmosphere/mpas_init_atm_cases.F#L217-L222">lines 217 and 222</a> in src/core_init_atmosphere/mpas_init_atm_cases.F that ordinarily prevents the parallel processing of static fields; and
+</p>
+<p class="ind3">
+(b) ensure that the "cvt" partition file prefix (e.g., x5.8060930.cvt.part.) is specified in the config_block_decomp_file_prefix
+variable in namelist.init_atmosphere.</li>
+</p>
+<p class="ind3">
+* Note also that when 'config_native_gwd_static = true', each MPI task will read roughly 4 GB of global terrain data, so care must
+be taken to use enough compute nodes to avoid running out of memory. </li>
+</p>
+
+<p class="ind2">(3) When running the model itself with the 15-km &#8211; 3-km mesh, it is necessary to set <b>config_apvm_upwinding = 0.0</b> in the nhyd_model namelist record.
+</p>
+
+<p class="ind2">
+<br>
+<br>
+<img src="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x5.8060930.grid.png" width="450">
+<br> 
+<a href="http://www2.mmm.ucar.edu/projects/mpas/atmosphere_meshes/x5.8060930.tar.gz">Download the mesh</a> (5963 MB) 
 </p>
 
 
