@@ -34,6 +34,63 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 7.1</span></big><br>
+      <big><span style="font-weight: bold;">3 September 2021</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This minor release addresses several issues in the MPAS-Atmosphere model and
+      initialization, and it corrects several minor compilation issues.
+      </p>
+
+      <p>
+      MPAS-Atmosphere:
+      <ul>
+      <li>In calculating moist air density in the real-data initialization case, virtual
+      temperature, rather than temperature, should be used.</li>
+
+      <li>An out-of-bounds array access in the GWDO scheme when running with multiple
+      OpenMP threads has been corrected.</li>
+
+      <li>A check has been added in the init_atmosphere core to ensure that the
+      intermediate file interval and the 'surface' stream output interval are
+      consistent.</li>
+
+      <li>A non-standard BOZ-literal constant has been corrected in the
+      module_ra_cam_support.F file. The non-standard constant lead to build
+      failures, particularly with newer versions of the GNU compilers.</li>
+      </ul>
+      </p>
+
+      <p>
+      General software:
+      <ul>
+      <li>The logic to add PIO libraries to the definition of LIBS in the top-level
+      Makefile has been updated to accommodate newer versions (approx. 2.5.2 or
+      later) of the PIO library; without the fix to the Makefile, builds would
+      fail with the message</li>
+
+<pre>
+  Checking for a usable PIO library...
+  ************ ERROR ************
+  Failed to compile a PIO test program
+  Please ensure the PIO environment variable is set to the PIO installation directory
+  ************ ERROR ************
+</pre>
+
+      <li>Various options for the 'gfortran' build target have been cleaned up.</li>
+
+      <li>Occasional parallel build failures related to a race condition in the ezxml
+      library compilation have been addressed.</li>
+      </ul>
+      </p>
+      </td>
+    </tr>
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 7.0</span></big><br>
       <big><span style="font-weight: bold;">8 June 2019</span></big>
       </td>
