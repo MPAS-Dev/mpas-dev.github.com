@@ -34,6 +34,52 @@
 
 
     <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 7.2</span></big><br>
+      <big><span style="font-weight: bold;">14 February 2022</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This minor release addresses several issues in the MPAS-Atmosphere model:
+
+      <ul>
+      <li>Correct the use of uninitialized memory in the init_atm_case_squall_line
+      routine by initializing the qvb array to zero before its first use.</li>
+
+      <li>Fix a bug in the vertical extrapolation of relative humidity and specific
+      humidity to model levels below the lowest first-guess level when first-guess
+      levels are given in top-to-bottom order in the input intermediate file.</li>
+
+      <li>Fix reproducibility issues in several fields within the Noah LSM over land-ice
+      points when running with different MPI task counts; however, only one of these
+      fields -- smstav, the surface moisture availability field -- persists outside
+      of the physics driver and is written to MPAS-Atmosphere restart files.</li>
+
+      <li>Correct the units and description attributes for the GWDO fields var2d, con,
+      oa1, oa2, oa3, oa4, ol1, ol2, ol3, and ol4 in both the init_atmosphere and
+      atmosphere core Registry.xml files.</li>
+
+      <li>Add code that had inadvertently been omitted for computing dtheta_dt_mp, the
+      potential temperature heating rate from microphysics. Prior to this change,
+      the dtheta_dt_mp field would always contain a constant zero value when written
+      to model output files.</li>
+
+      <li>Correct a check on the availability of the dtheta_dt_mix variable when
+      computing depv_dt_mix in the PV diagnostics module.</li>
+
+      <li>Correct the parallel computation of iLev_DT (and other fields that depend on
+      it, including u_pv, v_pv, theta_pv, vort_pv, depv_dt_diab_pv, and
+      depv_dt_fric_pv) in the PV diagnostics module.</li>
+
+      </ul>
+      </p>
+      </td>
+    </tr>
+
+
+    <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 7.1</span></big><br>
       <big><span style="font-weight: bold;">3 September 2021</span></big>
       </td>
