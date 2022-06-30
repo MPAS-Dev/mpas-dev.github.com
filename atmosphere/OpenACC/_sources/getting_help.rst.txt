@@ -12,4 +12,4 @@ encouraged.
    to track code issues that in principle can be addressed through fixes to the
    code.*
 
-.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/phpBB3/viewforum.php?f=102
+.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/forums/gpu-openacc.128/

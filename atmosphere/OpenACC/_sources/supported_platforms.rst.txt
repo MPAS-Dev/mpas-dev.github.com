@@ -22,4 +22,4 @@ of the `WRF/MPAS support forum`_.
 .. _AC922: https://www.ibm.com/products/power-systems-ac922/
 .. _PGI: https://www.pgroup.com/index.htm
 .. _Summit: https://www.olcf.ornl.gov/summit/
-.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/phpBB3/viewforum.php?f=102
+.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/forums/gpu-openacc.128/

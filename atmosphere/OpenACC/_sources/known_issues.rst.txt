@@ -10,4 +10,4 @@ If you believe you have identified an issue with the code, please begin by
 raising the issue for discussion on the "GPU/OpenACC" section of the
 `WRF/MPAS support forum`_ .
 
-.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/phpBB3/viewforum.php?f=102
+.. _`WRF/MPAS support forum`: https://forum.mmm.ucar.edu/forums/gpu-openacc.128/
