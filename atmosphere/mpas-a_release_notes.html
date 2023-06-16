@@ -32,6 +32,93 @@
 <table style="text-align: left; width: 654px; height: 52px; background-color: rgb(255, 255, 204);" border="0" cellpadding="6" cellspacing="2">
   <tbody>
 
+    <tr>
+      <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 8.0.0</span></big><br>
+      <big><span style="font-weight: bold;">16 June 2023</span></big>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+
+      <p>
+      This major release of MPAS introduces significant new features in the MPAS-Atmosphere model
+      and its supporting software infrastructure.
+      </p>
+
+      <p>
+      Changes to the initialization include:
+      <ul>
+
+          <li>Enable parallel remapping of static fields with arbitrary graph partition files; special CVT partition files are no longer required.</li>
+
+          <li>Reset the default for the lower air-temperature extrapolation (config_extrap_airtemp) from 'linear' to 'lapse-rate' in the namelist. This applies to initialization and to lateral boundary condition generation for MPAS-A.</li>
+
+          <li>Set the condition for the lower extrapolation of the horizontal velocity such that it returns the lowest analysis level value instead of a linear extrapolation when the requested level is below the analysis level.</li>
+
+          <li>Create a new init case (13) for creating 3-d CAM-MPAS grids.</li>
+
+      </ul>
+      </p>
+
+      <p>
+      Changes to the physics include:
+      <ul>
+
+          <li>Update the Noah land surface scheme to the WRF 4.5 release.</li>
+
+          <li>Update the MM5 surface layer scheme to the WRF 4.5 release.</li>
+
+          <li>Implemented the CCPP-compliant version of:
+
+              <ul>
+                  <li>the revised MM5 surface layer scheme;</li>
+                  <li>the parameterization of the gravity-wave drag over orography;</li>
+                  <li>the YSU Planetary Boundary Layer scheme;</li>
+                  <li>the scale-aware nTiedtke parameterization of convection; and</li>
+                  <li>the WSM6 cloud microphysics parameterization.</li>
+              </ul>
+
+          </li>
+
+          <li>Correct the initialization of the maximum snow albedo over sea ice points (now set to 0.75 instead of 0).</li>
+
+          <li>Fix the option that defines the surface albedo over sea ice points. The default option is now set to zero and the default value for the surface albedo over sea ice points is set to 0.65.</li>
+
+          <li>In the dynamics, rework the computation of the advective tendency of potential temperature needed as forcing in the nTiedtke and Grell-Freitas parameterizations of deep convection. The advective tendency of potential temperature is now computed the same way for the nTiedtke and Grell-Freitas convection schemes.</li>
+
+      </ul>
+      </p>
+      <p>
+      <i>IMPORTANT NOTE: The updated physics schemes require new look-up tables, in particular, for the Noah land-surface model. The <span class="terminal">checkout_data_files.sh</span> script that is run at build time should correctly update these tables, but tables in other run directories will need to be manually updated.</i>
+      </p>
+      <p>
+      Changes to the dynamics:
+      <ul>
+
+          <li>Modify the regional MPAS-A relaxation-zone filters to increase the robustness of regional MPAS-A simulations, including access to specific relaxation-zone filter parameters through the namelist. The defaults for regional relaxation-zone filtering for the horizontal momentum have been changed from the previous release.</li>
+
+          <li>Generalize the 2nd-order horizontal mixing used in the upper wave absorbing region in MPAS-A, including access to the configuration parameters through the namelist.</li>
+
+          <li>The pressure-level height diagnostic is now interpolated using ln(p) for increased accuracy. This significantly reduces the diagnostics height bias in the previous version.</li>
+
+          <li>Change the vertical interpolation weights for projecting cell-centered variables to w levels to be the vertically integrated average. Previously the weights represented a linear interpolation in z. These weights are computed in the initialization code and used in both the initialization and integration.</li>
+
+          <li>Eliminate the need to specify a horizontal length scale in namelists (config_len_disp). New mesh files supply this length scale, which is read by the model at start-up.</li>
+
+          <li>Include changes to the initialization and to MPAS-A such that this release can be directly used in CESM/CAM.</li>
+
+      </ul>
+      </p>
+      <p>
+      Changes to infrastructure include:
+      <ul>
+          <li>Introduce a new I/O layer, the Simple MPAS I/O Layer. SMIOL provides a subset of the parallel I/O functionality of PIO, but with a simplified design that minimizes external dependencies to just the Parallel-NetCDF library. When the $PIO environment variable is not set at compile time, SMIOL will be used in MPAS.</li>
+
+          <li>Refactor halo communication to make use of a new group (aggregated) halo exchange module. The new mpas_halo module is designed to be amenable to GPU-direct communication of halos with OpenACC. In this release, however, OpenACC directives have not yet been added.</li>
+      </ul>
+      </p>
+      </td>
+    </tr>
 
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">MPAS-Atmosphere Version 7.3</span></big><br>
