@@ -50,9 +50,9 @@ task counts.
 <h2>Creating limited-area subsets of meshes</h2>
 
 <p class="noind">
-The MPAS-Atmosphere v7.0 release includes the capability to perform regional simulations.
-The regional meshes used in these simulations are formed as subsets of existing meshes.
-Currently, the <a href="https://github.com/MiCurry/MPAS-Limited-Area" target="_blank">MPAS-Limited-Area</a>
+MPAS-Atmosphere includes the capability to perform regional simulations.
+Regional meshes are formed as subsets of existing meshes.
+Currently, the <a href="https://github.com/MPAS-Dev/MPAS-Limited-Area" target="_blank">MPAS-Limited-Area</a>
 Python tool is the supported method for generating regional meshes as subsets of any of the meshes
 available on this download page. Please refer to the documentation provided with MPAS-Limited-Area
 for details of its use.
@@ -155,19 +155,9 @@ and when writing output streams from the model with 3-d fields, <b>it is necessa
 large variables, such as "pnetcdf,cdf5" or "netcdf4"</b>. For more information on selecting the "io_type" of a stream,
 refer to Chapter 5 in the Users' Guide.</p>
 
-<p class="ind">Additionally, depending on the amount of memory available, it may be necessary to interpolate the static,
-geographical fields in parallel. In the v5.0 release, doing this properly <b>requires the use of a special, convex mesh
-decomposition file -- a regular METIS partition file will not give correct results!</b> In order to process static fields
-in parallel, one must:
-</p>
-
-<p class="ind">
-(1) comment-out the code between <a href="https://github.com/MPAS-Dev/MPAS-Model/blob/v7.0/src/core_init_atmosphere/mpas_init_atm_cases.F#L217-L222">lines 217 and 222</a> in src/core_init_atmosphere/mpas_init_atm_cases.F that ordinarily prevents the parallel processing of static fields; and
-</p>
-
-<p class="ind">
-(2) ensure that the "cvt" partition file prefix (e.g., x1.5898242.cvt.part., x1.65536002.cvt.part., etc.) is specified
-in the config_block_decomp_file_prefix variable in namelist.init_atmosphere.
+<p class="ind">Note that when processing the GWDO static fields, each MPI task will need to allocate ~4 GB of additional
+memory to hold the global 30-arc-second terrain dataset. In many cases, under-subscribing batch nodes in order to avoid
+exceeding memory limits may be necessary.
 </p>
 
 <p class="ind2">
@@ -287,27 +277,12 @@ large variables, such as "pnetcdf,cdf5" or "netcdf4"</b>. For more information o
 refer to Chapter 5 in the Users' Guide.
 <br>
 <br>
-(2) Depending on the amount of memory available, it may be necessary to interpolate the static,
-geographical fields in parallel. In the v5.0 release, doing this properly <b>requires the use of a special, convex mesh
-decomposition file -- a regular METIS partition file will not give correct results!</b> In order to process static fields
-in parallel, one must:
+(2) When processing the GWDO static fields, each MPI task will need to allocate ~4 GB of additional
+memory to hold the global 30-arc-second terrain dataset. In many cases, under-subscribing batch nodes in order to avoid
+exceeding memory limits may be necessary.
 <br>
-</p>
-<p class="ind3">
-(1) comment-out the code between <a href="https://github.com/MPAS-Dev/MPAS-Model/blob/v7.0/src/core_init_atmosphere/mpas_init_atm_cases.F#L217-L222">lines 217 and 222</a> in src/core_init_atmosphere/mpas_init_atm_cases.F that ordinarily prevents the parallel processing of static fields; and
-</p>
-<p class="ind3">
-(b) ensure that the "cvt" partition file prefix (e.g., x5.6488066.cvt.part.) is specified in the config_block_decomp_file_prefix
-variable in namelist.init_atmosphere.</li>
-</p>
-<p class="ind3">
-* Note also that when 'config_native_gwd_static = true', each MPI task will read roughly 4 GB of global terrain data, so care must
-be taken to use enough compute nodes to avoid running out of memory. </li>
-</p>
-
-<p class="ind2">(3) When running the model itself with the 15-km &#8211; 3-km mesh, it is necessary to set <b>config_apvm_upwinding = 0.0</b> in the nhyd_model namelist record.
-</p>
-
+<br>
+(3) When running the model itself with the 15-km &#8211; 3-km mesh, it is necessary to set <b>config_apvm_upwinding = 0.0</b> in the nhyd_model namelist record.
 <p class="ind2">
 <br>
 <br>
@@ -330,27 +305,12 @@ large variables, such as "pnetcdf,cdf5" or "netcdf4"</b>. For more information o
 refer to Chapter 5 in the Users' Guide.
 <br>
 <br>
-(2) Depending on the amount of memory available, it may be necessary to interpolate the static,
-geographical fields in parallel. In the v5.0 release, doing this properly <b>requires the use of a special, convex mesh
-decomposition file -- a regular METIS partition file will not give correct results!</b> In order to process static fields
-in parallel, one must:
+(2) When processing the GWDO static fields, each MPI task will need to allocate ~4 GB of additional
+memory to hold the global 30-arc-second terrain dataset. In many cases, under-subscribing batch nodes in order to avoid
+exceeding memory limits may be necessary.
 <br>
-</p>
-<p class="ind3">
-(1) comment-out the code between <a href="https://github.com/MPAS-Dev/MPAS-Model/blob/v7.0/src/core_init_atmosphere/mpas_init_atm_cases.F#L217-L222">lines 217 and 222</a> in src/core_init_atmosphere/mpas_init_atm_cases.F that ordinarily prevents the parallel processing of static fields; and
-</p>
-<p class="ind3">
-(b) ensure that the "cvt" partition file prefix (e.g., x5.8060930.cvt.part.) is specified in the config_block_decomp_file_prefix
-variable in namelist.init_atmosphere.</li>
-</p>
-<p class="ind3">
-* Note also that when 'config_native_gwd_static = true', each MPI task will read roughly 4 GB of global terrain data, so care must
-be taken to use enough compute nodes to avoid running out of memory. </li>
-</p>
-
-<p class="ind2">(3) When running the model itself with the 15-km &#8211; 3-km mesh, it is necessary to set <b>config_apvm_upwinding = 0.0</b> in the nhyd_model namelist record.
-</p>
-
+<br>
+(3) When running the model itself with the 15-km &#8211; 3-km mesh, it is necessary to set <b>config_apvm_upwinding = 0.0</b> in the nhyd_model namelist record.
 <p class="ind2">
 <br>
 <br>
